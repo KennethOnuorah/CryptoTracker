@@ -1,3 +1,10 @@
 .homepage {
   padding: 20px 40px;
 }
+
+@media screen and (max-width: 590px) {
+  .homepage {
+    display: flex;
+    justify-content: center;
+  }
+}

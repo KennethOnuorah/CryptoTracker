@@ -1,16 +1,16 @@
-.popularTrends{
+.chart{
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.popularTrends .heading{
+.chart .heading{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.popularTrends .heading .title{
+.chart .heading .title{
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -19,7 +19,7 @@
   font-weight: 500;
 }
 
-.popularTrends .heading .subtitle{
+.chart .heading .subtitle{
   font-size: x-large;
   color: rgb(144, 144, 144);
 }

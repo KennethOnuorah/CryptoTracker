@@ -1,0 +1,29 @@
+.currencyTable{
+  padding: 20px;
+  border-radius: 10px;
+  color: white;
+  background-color: #3B3364;
+  box-shadow: 0px 4px 16px 4px #1e1a3448;
+  border-spacing: 0 1rem;
+}
+
+.currencyTable .tableEntry{
+  background-color: #55498e;
+  gap: 1rem;
+}
+
+.tableEntry th{
+  padding: 20px;
+  border-left: none;
+  border-right: none;
+}
+
+.tableEntry th:nth-child(1){
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.tableEntry th:nth-last-child(1){
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
