@@ -7,7 +7,7 @@ const Header = () => {
     <header className="header">
       <div className="headerContainer">
         <div className="appName">
-          CryptoTracker
+          CryptoTra¢ker
         </div>
         <div className='left'>
           <a 
@@ -21,9 +21,9 @@ const Header = () => {
           </a>
           <div className="searchField">
             <button type="submit">
-              <Search size={20} color={"white"}/>
+              <Search size={20} color={"black"}/>
             </button>
-            <input type="search" name="searchBar" className="searchBar" placeholder="Search..."/>
+            <input type="search" name="searchBar" className="searchBar" placeholder="Search"/>
           </div>
         </div>
       </div>

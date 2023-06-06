@@ -1,10 +1,13 @@
 .homepage {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   padding: 20px 40px;
 }
 
 @media screen and (max-width: 590px) {
   .homepage {
-    display: flex;
     justify-content: center;
+    padding: 0px;
   }
 }
