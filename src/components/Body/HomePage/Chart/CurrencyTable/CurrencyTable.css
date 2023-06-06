@@ -1,29 +1,32 @@
 .currencyTable{
-  padding: 20px;
   border-radius: 10px;
-  color: white;
-  background-color: #3B3364;
-  box-shadow: 0px 4px 16px 4px #1e1a3448;
-  border-spacing: 0 1rem;
+  color: black;
+  background-color: white;
+  box-shadow: 0px 10px 16px rgba(0, 0, 0, 0.089);
+  border-collapse: collapse; 
 }
 
-.currencyTable .tableEntry{
-  background-color: #55498e;
-  gap: 1rem;
+.currencyTable .fields th{
+  padding: 10px 20px;
 }
 
-.tableEntry th{
-  padding: 20px;
-  border-left: none;
-  border-right: none;
+.currencyTable .fields .Name{
+  text-align: left;
 }
 
-.tableEntry th:nth-child(1){
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+.currencyTable .fields .Price{
+  text-align: right;
 }
 
-.tableEntry th:nth-last-child(1){
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+@media screen and (max-width: 590px) {
+  .currencyTable{
+    border-radius: 0px;
+    padding: 0;
+  }
+
+  .currencyTable .fields th:nth-child(1),
+  .currencyTable .fields th:nth-last-child(1),
+  .currencyTable .fields th:nth-last-child(2){
+    display: none;
+  }
 }

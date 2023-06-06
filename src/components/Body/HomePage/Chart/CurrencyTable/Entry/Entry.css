@@ -1,0 +1,57 @@
+.tableEntry{
+  border-top: 1.5px solid #ececec;
+  color: black;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tableEntry:hover{
+  background-color: rgb(230, 249, 255);
+}
+
+.tableEntry th{
+  padding: 20px;
+  border-left: none;
+  border-right: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tableEntry .price{
+  text-align: right;
+}
+
+.tableEntry .name a{
+  text-decoration: none;
+  color: black;
+}
+
+.tableEntry .name .group{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tableEntry .name .group .nameDisplay{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: start;
+}
+
+.tableEntry .name .group .nameDisplay .abbreviation{
+  color: rgb(105, 105, 105);
+}
+
+@media screen and (max-width: 590px) {
+  .currencyTable .tableEntry th:nth-child(1),
+  .currencyTable .tableEntry th:nth-last-child(1),
+  .currencyTable .tableEntry th:nth-last-child(2){
+    display: none;
+  }
+  
+  .currencyTable .tableEntry .name{
+    text-align: left;
+  }
+}

@@ -21,7 +21,7 @@ const Chart = ({ title, subtitle, icon } : ChartProps) => {
         </div>
       </div>
       <CurrencyTable 
-        fields={["#", "Name", "Price", "24h %", "Market Cap", "7d Chart"]}
+        fields={["#", "Name", "Price", "24h %", "Market Cap", "7d Chart",]}
       />
     </section>
   )

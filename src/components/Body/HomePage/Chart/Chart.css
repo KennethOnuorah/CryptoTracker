@@ -4,6 +4,10 @@
   gap: 2rem;
 }
 
+.chart:nth-child(2){
+  gap: 1rem;
+}
+
 .chart .heading{
   display: flex;
   flex-direction: column;
@@ -12,14 +16,29 @@
 
 .chart .heading .title{
   display: flex;
-  align-items: center;
+  align-items:center;
   gap: 1rem;
-  color: white;
+  white-space: nowrap;
+  color: black;
   font-size: 2.5em;
   font-weight: 500;
 }
 
 .chart .heading .subtitle{
   font-size: x-large;
-  color: rgb(144, 144, 144);
+  color: rgb(110, 110, 110);
+}
+
+@media screen and (max-width: 590px) {
+  .chart .heading{
+    text-align: center;
+    padding: 0px 20px;
+  }
+  .chart .heading .title{
+    justify-content: center;
+  }
+  
+  .chart .currencyTable tbody th{
+    font-size: 0.85em;
+  }
 }
