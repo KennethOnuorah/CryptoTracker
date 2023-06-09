@@ -1,62 +1,38 @@
 import Entry from "./Entry/Entry"
+import { useAppSelector } from "../../../../../hooks/redux"
+
+import { CoinData } from "../../../../../helpers/types"
+
 import "./CurrencyTable.css"
 
 interface CurrencyTableProps{
-  fields: string[],
+  fields: any[],
+  data: CoinData[]
 }
 
-const CurrencyTable = ({ fields } : CurrencyTableProps) => {
+const CurrencyTable = ({ fields, data } : CurrencyTableProps) => {
+  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+
   return (
-    <table className="currencyTable">
+    <table className={`currencyTable${isDarkTheme ? ' darkCurrencyTable' : ''}`}>
       <thead className="fields">
-        {fields.map((f) => <th className={`${f}`}>{f}</th>)}
+        <tr>
+          {fields.map((f, index) => <th key={index} className={`${f}`}>{f}</th>)}
+        </tr>
       </thead>
       <tbody>
-        <Entry
-          index={1}
-          logoSrc="/images/placeholder_token_logo.png"
-          name="Bitcoin"
-          abbreviation="BTC"
-          price={26883.29}
-          dayChange="+4.26%"
-          marketCap={521.34}
-        />
-        <Entry
-          index={1}
-          logoSrc="/images/placeholder_token_logo.png"
-          name="Bitcoin"
-          abbreviation="BTC"
-          price={26883.29}
-          dayChange="+4.26%"
-          marketCap={521.34}
-        />
-        <Entry
-          index={1}
-          logoSrc="/images/placeholder_token_logo.png"
-          name="Bitcoin"
-          abbreviation="BTC"
-          price={26883.29}
-          dayChange="+4.26%"
-          marketCap={521.34}
-        />
-        <Entry
-          index={1}
-          logoSrc="/images/placeholder_token_logo.png"
-          name="Bitcoin"
-          abbreviation="BTC"
-          price={26883.29}
-          dayChange="+4.26%"
-          marketCap={521.34}
-        />
-        <Entry
-          index={1}
-          logoSrc="/images/placeholder_token_logo.png"
-          name="Bitcoin"
-          abbreviation="BTC"
-          price={26883.29}
-          dayChange="+4.26%"
-          marketCap={521.34}
-        />      
+        {data.map((coin, index) => 
+          <Entry
+            key={index}
+            index={index + 1}
+            logoSrc={coin.image}
+            name={coin.id}
+            abbreviation={coin.symbol}
+            price={coin.current_price}
+            dayChange={coin.price_change_percentage_24h}
+            marketCap={coin.market_cap}
+          />
+        )}  
       </tbody>
     </table>
   )

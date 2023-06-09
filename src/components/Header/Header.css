@@ -4,10 +4,16 @@
   width: 100%;
   padding: 20px 100px;
   box-sizing: border-box;
-  background-color: #ffffff;
+  background-color: white;
   z-index: 1;
   padding: 20px 40px;
   box-shadow: 0px 4px 16px 4px #2e2e2e1b;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.darkHeader{
+  background-color: black;
+  box-shadow: 0px 12px 20px 4px #1a1a1a64;
 }
 
 .headerContainer {
@@ -15,6 +21,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.headerContainer a{
+  text-decoration: none;
 }
 
 .headerContainer .appName{
@@ -30,7 +40,7 @@
   gap: 1rem;
 }
 
-.headerContainer .left .visitRepo{
+.toggleColorTheme{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,23 +49,27 @@
   border: none;
   outline: none;
   border-radius: 10px;
-  background-color: black;
+  background-color: #f0f0f0;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.headerContainer .left .visitRepo:hover,
-.headerContainer .left .visitRepo:focus
+.toggleColorTheme:hover,
+.toggleColorTheme:focus
 {
   filter: contrast(0.5);
 }
-
+.darkToggleColorTheme{
+  background-color: white;
+}
 
 .headerContainer .left .searchField {
   display: flex;
   align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 10px;
 }
 
-.headerContainer .searchField button,
+.headerContainer .searchField .submitEntry,
 .headerContainer .searchField .searchBar{
   display: flex;
   align-items: center;
@@ -65,7 +79,7 @@
   background-color: #f0f0f0;
   color: black;
 }
-.headerContainer .searchField button {
+.headerContainer .searchField .submitEntry {
   display: flex;
   padding: 5px 10px 5px 15px;
   border-top-left-radius: 10px;
@@ -73,8 +87,8 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.headerContainer .searchField button:hover,
-.headerContainer .searchField button:focus {
+.headerContainer .searchField .submitEntry:hover,
+.headerContainer .searchField .submitEntry:focus {
   background-color: rgb(219, 219, 219);
 }
 .headerContainer .searchField .searchBar {
@@ -83,6 +97,9 @@
   font-size: medium;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+.darkSearch {
+  background-color: white;
 }
 
 @media screen and (max-width: 765px){

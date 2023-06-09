@@ -1,3 +1,9 @@
+import { useAppSelector } from '../../../../../../hooks/redux'
+
+import { HiOutlineStar as FavoriteIcon } from 'react-icons/hi'
+import { capitalizeWord, capitalizeSentence } from '../../../../../../utils/capitalize'
+import { abbreviate } from '../../../../../../utils/abbreviate'
+
 import "./Entry.css"
 
 interface EntryProps{
@@ -6,7 +12,7 @@ interface EntryProps{
   name: string,
   abbreviation: string,
   price: number,
-  dayChange: number | string,
+  dayChange: number,
   marketCap: number,
 }
 
@@ -19,27 +25,43 @@ const Entry = ({
   dayChange,
   marketCap
  } : EntryProps) => {
+  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+  const isDeclining: boolean = dayChange < 0
+  
   return (
-    <tr className="tableEntry">
+    <tr className={`tableEntry${isDarkTheme ? ' darkTableEntry' : ''}`}>
       <th className="index">{index}</th>
       <th className="name">
         <a href="#">
           <div className="group">
             <img src={logoSrc} height={"25px"}/>
             <div className="nameDisplay">
-              {name}
+              {capitalizeSentence(name.replace('-', ' '))}
               <br/>
               <div className="abbreviation">
-                {abbreviation}
+                {abbreviation.toUpperCase()}
               </div>
             </div>
           </div>
         </a>
       </th>
-      <th className="price">${price.toLocaleString()}</th>
-      <th className="24hChange">{dayChange}</th>
-      <th className="marketCap">${marketCap} B</th>
-      <th className="weekChart">[No Charts Yet]</th>
+      <th className="price">
+        ${price.toLocaleString()}
+      </th>
+      <th   
+        className="24hChange"
+        style={{
+          color: isDeclining ? "red" : "green" 
+        }}
+      >
+        {dayChange > 0 ? '+' : ''}{dayChange.toFixed(2)}%
+      </th>
+      <th className="marketCap">${abbreviate(marketCap)}</th>
+      <th>
+        <button className='favoriteBtn' title={`Add ${abbreviation.toUpperCase()} to favorites`}>
+          <FavoriteIcon size={20} color={isDarkTheme ? 'white' : 'black'}/>
+        </button>
+      </th>
     </tr>
   )
 }

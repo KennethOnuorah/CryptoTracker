@@ -7,6 +7,10 @@
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 10px 16px rgba(0, 0, 0, 0.089);
+  transition:  all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.darkArticle{
+  background-color: rgb(27, 27, 27);
 }
 
 .article .top{
@@ -24,13 +28,17 @@
 .article .top .text .headline{
   font-weight: bold;
   font-size: x-large;
+  transition:  all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.darkHeadline{
+  color: white;
 }
 
 .article .top .text .description{
   color: gray;
 }
 
-.article .top img{
+.article .top .articleThumbnail{
   border-radius: 10px;
 }
 
@@ -40,7 +48,6 @@
   align-items: center;
   padding: 10px 20px;
   border: none;
-  outline: none;
   border-radius: 10px;
   text-align: left;
   text-decoration: none;
@@ -64,5 +71,9 @@
 @media screen and (max-width: 590px) {
   .article{
     margin: 0px 20px;
+  }
+
+  .article .top .articleThumbnail{
+    display: none;
   }
 }
