@@ -1,4 +1,6 @@
 import Article from "./Article/Article"
+import { useAppSelector } from "../../../../hooks/redux"
+
 import "./News.css"
 
 interface NewsProps{
@@ -8,10 +10,17 @@ interface NewsProps{
 }
 
 const News = ({ title, subtitle, icon } : NewsProps) => {
+  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+
   return (
     <section className="news">
       <div className="heading">
-        <title className='title'> 
+        <title 
+          className='title'
+          style={{
+            color: isDarkTheme ? 'white' : 'black'
+          }}
+        > 
           {title}
           {icon}
         </title>
