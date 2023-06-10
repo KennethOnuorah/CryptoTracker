@@ -13,7 +13,7 @@ function App() {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
 
   // useTrends(POPULAR_TRENDS_URL)
-  // console.log("The "popular trends" API has been called.")
+  // console.log("The 'popular trends' API has been called.")
 
   return (
     <div className={`app${isDarkTheme ? ' darkApp' : ''}`}>

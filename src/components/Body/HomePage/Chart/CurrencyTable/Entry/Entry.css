@@ -9,7 +9,7 @@
 }
 
 .tableEntry:hover{
-  filter:opacity(0.5);
+  filter: opacity(0.65);
 }
 
 .tableEntry th{
@@ -55,15 +55,52 @@
   border: none;
   outline: none;
   background-color: transparent;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tableEntry .favoriteBtn:hover,
+.tableEntry .favoriteBtn:focus{
+  transform: scale(1.25, 1.25);
+  animation: shakeAnimation 1.25s infinite 0.2s;
 }
 
 @media screen and (max-width: 590px) {
-  .currencyTable .tableEntry th:nth-child(1),
-  .currencyTable .tableEntry th:nth-last-child(2){
+  .tableEntry th:nth-child(1),
+  .tableEntry th:nth-last-child(2){
     display: none;
   }
   
-  .currencyTable .tableEntry .name{
+  .tableEntry .name{
     text-align: left;
+  }
+}
+
+@keyframes shakeAnimation {
+  0%{
+    transform: rotateZ(0deg) scale(1.25, 1.25);
+  }
+  10%{
+    transform: rotateZ(-4deg) scale(1.25, 1.25);
+  }
+  20%{
+    transform: rotateZ(7deg) scale(1.25, 1.25);
+  }
+  30%{
+    transform: rotateZ(-9deg) scale(1.25, 1.25);
+  }
+  40%{
+    transform: rotateZ(10deg )scale(1.25, 1.25);
+  }
+  50%{
+    transform: rotateZ(-9deg) scale(1.25, 1.25);
+  }
+  60%{
+    transform: rotateZ(3deg) scale(1.25, 1.25);
+  }
+  70%{
+    transform: rotateZ(0deg) scale(1.25, 1.25);
+  }
+  100%{
+    transform: rotateZ(0deg) scale(1.25, 1.25);
   }
 }

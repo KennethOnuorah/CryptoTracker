@@ -1,7 +1,6 @@
 import { useAppSelector } from '../../../../../../hooks/redux'
 
 import { HiOutlineStar as FavoriteIcon } from 'react-icons/hi'
-import { capitalizeWord, capitalizeSentence } from '../../../../../../utils/capitalize'
 import { abbreviate } from '../../../../../../utils/abbreviate'
 
 import "./Entry.css"
@@ -36,7 +35,7 @@ const Entry = ({
           <div className="group">
             <img src={logoSrc} height={"25px"}/>
             <div className="nameDisplay">
-              {capitalizeSentence(name.replace('-', ' '))}
+              {name}
               <br/>
               <div className="abbreviation">
                 {abbreviation.toUpperCase()}
@@ -59,7 +58,13 @@ const Entry = ({
       <th className="marketCap">${abbreviate(marketCap)}</th>
       <th>
         <button className='favoriteBtn' title={`Add ${abbreviation.toUpperCase()} to favorites`}>
-          <FavoriteIcon size={20} color={isDarkTheme ? 'white' : 'black'}/>
+          <FavoriteIcon 
+            size={20} 
+            color={isDarkTheme ? 'white' : 'black'}
+            style={{
+              transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+            }}
+          />
         </button>
       </th>
     </tr>
