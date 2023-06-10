@@ -1,4 +1,6 @@
 import Entry from "./Entry/Entry"
+import SkeletonEntry from "./SkeletonEntry/SkeletonEntry"
+
 import { useAppSelector } from "../../../../../hooks/redux"
 
 import { CoinData } from "../../../../../helpers/types"
@@ -26,13 +28,14 @@ const CurrencyTable = ({ fields, data } : CurrencyTableProps) => {
             key={index}
             index={index + 1}
             logoSrc={coin.image}
-            name={coin.id}
+            name={coin.name}
             abbreviation={coin.symbol}
             price={coin.current_price}
             dayChange={coin.price_change_percentage_24h}
             marketCap={coin.market_cap}
           />
-        )}  
+        )}
+        {/* <SkeletonEntry/> */}
       </tbody>
     </table>
   )
