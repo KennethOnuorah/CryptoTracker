@@ -1,5 +1,4 @@
 .currencyTable{
-  border-radius: 10px;
   color: black;
   background-color: white;
   box-shadow: 0px 10px 16px rgba(0, 0, 0, 0.089);
@@ -30,7 +29,6 @@
 
 @media screen and (max-width: 590px) {
   .currencyTable{
-    border-radius: 0px;
     padding: 0;
   }
 

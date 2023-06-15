@@ -1,5 +1,5 @@
 import Entry from "./Entry/Entry"
-import SkeletonEntry from "./SkeletonEntry/SkeletonEntry"
+// import SkeletonEntry from "./SkeletonEntry/SkeletonEntry"
 
 import { useAppSelector } from "../../../../../hooks/redux"
 

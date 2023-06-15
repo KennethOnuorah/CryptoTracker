@@ -1,11 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit'
-import popularTrendsReducer from './slices/popularTrends'
+import { configureStore, } from '@reduxjs/toolkit'
+
+import currenciesReducer from './slices/currencies'
 import colorThemeReducer from './slices/colorTheme'
+import favoritesReducer from './slices/favorites'
 
 export const store = configureStore({
   reducer: {
-    popularTrendsReducer,
-    colorThemeReducer
+    currenciesReducer,
+    colorThemeReducer,
+    favoritesReducer,
   }
 })
 
