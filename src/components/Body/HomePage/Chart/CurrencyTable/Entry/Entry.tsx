@@ -1,6 +1,7 @@
-import { useAppSelector } from '../../../../../../hooks/redux'
+import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
+import { setNamesOfFavorites } from '../../../../../../../redux/slices/favorites'
 
-import { HiOutlineStar as FavoriteIcon } from 'react-icons/hi'
+import { HiOutlineStar as StarEmptyIcon, HiStar as StarFilledIcon } from 'react-icons/hi'
 import { abbreviate } from '../../../../../../utils/abbreviate'
 
 import "./Entry.css"
@@ -22,11 +23,15 @@ const Entry = ({
   abbreviation,
   price,
   dayChange,
-  marketCap
+  marketCap,
  } : EntryProps) => {
+  const dispatch = useAppDispatch()
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
-  const isDeclining: boolean = dayChange < 0
-  
+  const allFavorites = useAppSelector(state => state.favoritesReducer.namesOfFavorites)
+
+  const isPriceDeclining = dayChange < 0
+  const isFavorite = allFavorites.includes(name)
+
   return (
     <tr className={`tableEntry${isDarkTheme ? ' darkTableEntry' : ''}`}>
       <th className="index">{index}</th>
@@ -49,22 +54,35 @@ const Entry = ({
       </th>
       <th   
         className="24hChange"
-        style={{
-          color: isDeclining ? "red" : "green" 
-        }}
+        style={{ color: isPriceDeclining ? "red" : "green" }}
       >
         {dayChange > 0 ? '+' : ''}{dayChange.toFixed(2)}%
       </th>
       <th className="marketCap">${abbreviate(marketCap)}</th>
       <th>
-        <button className='favoriteBtn' title={`Add ${abbreviation.toUpperCase()} to favorites`}>
-          <FavoriteIcon 
-            size={20} 
-            color={isDarkTheme ? 'white' : 'black'}
-            style={{
-              transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
-            }}
-          />
+        <button 
+          className='favoriteBtn' 
+          onClick={() => {
+            if(!isFavorite){
+              dispatch(setNamesOfFavorites([...allFavorites, name]))
+            }else{
+              const updatedFavorites = allFavorites.filter(fav => fav !== name)
+              dispatch(setNamesOfFavorites(updatedFavorites))
+            }
+          }}
+        >
+          {isFavorite ? 
+            <StarFilledIcon 
+              size={20} 
+              color={'goldenrod'}
+              style={{ transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"}}
+            /> : 
+            <StarEmptyIcon 
+              size={20} 
+              color={isDarkTheme ? 'white' : 'black'}
+              style={{ transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"}}
+            />
+          }
         </button>
       </th>
     </tr>

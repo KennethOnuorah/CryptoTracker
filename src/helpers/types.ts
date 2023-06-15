@@ -1,3 +1,7 @@
+interface PriceTimeline{
+  price: number[]
+}
+
 export type CoinData = {
   id: string,
   symbol: string,
@@ -20,8 +24,11 @@ export type CoinData = {
   ath: number,
   ath_change_percentage: number,
   ath_date: string,
-  atl:67.81,atl_change_percentage: number,
+  atl: number,
+  atl_change_percentage: number,
   atl_date: string,
   roi: any,
-  last_updated: string
+  last_updated: string,
+  sparkline_in_7d?: PriceTimeline,
+  price_change_percentage_7d_in_currency?: number
 }

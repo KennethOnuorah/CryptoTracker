@@ -11,7 +11,7 @@ interface ChartProps{
   title: string,
   subtitle?: string,
   icon: JSX.Element,
-  data: CoinData[]
+  data: CoinData[],
 }
 
 const Chart = ({ title, subtitle, icon, data } : ChartProps) => {
@@ -48,6 +48,7 @@ const Chart = ({ title, subtitle, icon, data } : ChartProps) => {
           ""
         ]}
         data={data}
+        
       />
     </section>
   )
