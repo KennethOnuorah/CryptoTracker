@@ -19,7 +19,9 @@ export const currencies = createSlice({
       state.isResponseReceived = action.payload
     },
     setCurrenciesData: (state, action): void => {
-      state.data = [...action.payload]
+      state.data = action.payload
+      localStorage.setItem("time_last_fetched_crypto", JSON.stringify(Date.now()))
+      setResponseReceived(false)
     }
   }
 })
