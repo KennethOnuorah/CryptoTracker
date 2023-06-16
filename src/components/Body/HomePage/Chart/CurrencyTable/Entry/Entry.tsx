@@ -1,5 +1,5 @@
 import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
-import { setNamesOfFavorites } from '../../../../../../../redux/slices/favorites'
+import { setFavoritesList } from '../../../../../../../redux/slices/favorites'
 
 import { HiOutlineStar as StarEmptyIcon, HiStar as StarFilledIcon } from 'react-icons/hi'
 import { abbreviate } from '../../../../../../utils/abbreviate'
@@ -27,7 +27,7 @@ const Entry = ({
  } : EntryProps) => {
   const dispatch = useAppDispatch()
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
-  const allFavorites = useAppSelector(state => state.favoritesReducer.namesOfFavorites)
+  const allFavorites = useAppSelector(state => state.favoritesReducer.favoritesList)
 
   const isPriceDeclining = dayChange < 0
   const isFavorite = allFavorites.includes(name)
@@ -54,7 +54,10 @@ const Entry = ({
       </th>
       <th   
         className="24hChange"
-        style={{ color: isPriceDeclining ? "red" : "green" }}
+        style={{ 
+          color: isPriceDeclining ? "red" : "green", 
+          transition: "color 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+        }}
       >
         {dayChange > 0 ? '+' : ''}{dayChange.toFixed(2)}%
       </th>
@@ -64,10 +67,10 @@ const Entry = ({
           className='favoriteBtn' 
           onClick={() => {
             if(!isFavorite){
-              dispatch(setNamesOfFavorites([...allFavorites, name]))
+              dispatch(setFavoritesList([...allFavorites, name]))
             }else{
               const updatedFavorites = allFavorites.filter(fav => fav !== name)
-              dispatch(setNamesOfFavorites(updatedFavorites))
+              dispatch(setFavoritesList(updatedFavorites))
             }
           }}
         >

@@ -7,18 +7,22 @@ import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 interface useIntervalFetchProps<T>{
   URL: string,
   interval: number,
-  action: ActionCreatorWithPayload<T[]>
+  checkpoint: number,
+  action: ActionCreatorWithPayload<T, string>
+  fetchID: string
 }
 
-const useIntervalFetch = <T,>({ URL, interval, action } : useIntervalFetchProps<T>) => {
+const useIntervalFetch = <T,>({ URL, interval, checkpoint, action, fetchID } : useIntervalFetchProps<T>) => {
   const dispatch = useAppDispatch()
+
   const fetch = async(): Promise<void> => {
     try {
+      const timeLastFetched = JSON.parse(localStorage.getItem(`time_last_fetched_${fetchID}`) as string)
+      const hasPassedCheckpoint = (Date.now() - timeLastFetched) >= checkpoint
+      if(!hasPassedCheckpoint) return
       const res = await axios.get(URL)
-      dispatch(action([...res.data]))
-      window.localStorage.setItem("cryptocurrency_data", JSON.stringify([res.data]))
-      window.localStorage.setItem("time_last_fetched", JSON.stringify(new Date()))
-      console.log(`[${new Date().toLocaleTimeString('en-US')}] Response received from: \n${URL.slice(0, URL.length / 3)}...`) 
+      dispatch(action(res.data))
+      console.log(`[${new Date().toLocaleTimeString('en-US')}] Response received from: \n${URL}`) 
     }
     catch (e) {
       console.error("Error:", e)
@@ -26,7 +30,6 @@ const useIntervalFetch = <T,>({ URL, interval, action } : useIntervalFetchProps<
   }
 
   useEffect(() => {
-    fetch()
     const intervalId = setInterval(() => fetch(), interval)
     return () => clearInterval(intervalId)
   }, [interval])

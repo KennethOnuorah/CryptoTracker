@@ -1,4 +1,5 @@
 import Article from "./Article/Article"
+import { NewsData, NewsArticle } from "../../../../helpers/types"
 import { useAppSelector } from "../../../../hooks/redux"
 
 import "./News.css"
@@ -7,10 +8,12 @@ interface NewsProps{
   title: string,
   subtitle?: string,
   icon: JSX.Element,
+  data: NewsData
 }
 
-const News = ({ title, subtitle, icon } : NewsProps) => {
+const News = ({ title, subtitle, icon, data } : NewsProps) => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+  const articles: NewsArticle[] = data.results.slice(0, 6)
 
   return (
     <section className="news">
@@ -29,12 +32,16 @@ const News = ({ title, subtitle, icon } : NewsProps) => {
         </div>
       </div>
       <div className="articles">
-        <Article/>
-        <Article/>
-        <Article/>
-        <Article/>
-        <Article/>
-        <Article/>
+        {articles.map((article, index) => 
+          <Article
+            key={index}
+            headline={article.title}
+            description={article.description}
+            imageSrc={article.image_url}
+            link={article.link}
+            site={article.source_id}
+          />
+        )}
       </div>
     </section>
   )

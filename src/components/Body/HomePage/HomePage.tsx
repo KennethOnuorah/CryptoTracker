@@ -1,5 +1,3 @@
-import { useEffect } from "react"
-
 import Chart from "./Chart/Chart"
 import News from "./News/News"
 
@@ -7,7 +5,8 @@ import { useAppSelector } from "../../../hooks/redux"
 import useIntervalFetch from "../../../hooks/useIntervalFetch"
 
 import { setCurrenciesData } from "../../../../redux/slices/currencies"
-import { CURRENCY_DATA_URL } from "../../../helpers/links"
+import { setNews } from "../../../../redux/slices/news"
+import { CURRENCY_API_URL, NEWS_API_URL } from "../../../helpers/links"
 import { CoinData } from "../../../helpers/types"
 
 import { ImFire as TrendIcon } from 'react-icons/im'
@@ -19,21 +18,27 @@ import "./HomePage.css"
 const HomePage = () => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   const currenciesData = useAppSelector(state => state.currenciesReducer.data)
-  const favoritesList = useAppSelector(state => state.favoritesReducer.namesOfFavorites)
+  const favoritesList = useAppSelector(state => state.favoritesReducer.favoritesList)
+  const news = useAppSelector(state => state.newsReducer.data)
 
   const popularCurrencies = currenciesData.slice(0, 10)
   const favoriteCurrencies = favoritesList.map(fav => currenciesData.find(curr => curr.name === fav)).filter((f): f is CoinData => f !== undefined)
 
-  // useIntervalFetch({
-  //   URL: /*CURRENCY_DATA_URL*/ '',
-  //   interval: 60000,
-  //   action: setCurrenciesData
-  // })
+  useIntervalFetch({
+    URL: CURRENCY_API_URL,
+    interval: 60000,
+    checkpoint: 360000,
+    action: setCurrenciesData,
+    fetchID: "crypto"
+  })
 
-  useEffect(() => {
-    const data = window.localStorage.getItem("cryptocurrency_data")
-    setCurrenciesData(data)
-  }, [])
+  useIntervalFetch({
+    URL: NEWS_API_URL,
+    interval: 60000,
+    checkpoint: 8.64e+7,
+    action: setNews,
+    fetchID: "news"
+  })
 
   return (
     <section className="homepage">
@@ -49,8 +54,8 @@ const HomePage = () => {
         data={favoriteCurrencies}
       />
       <News
-        title="News"
-        subtitle="Daily updates and insights on the crypto market"
+        title="Daily News"
+        subtitle="Stay caught up on the latest events"
         icon={
           <NewsIcon 
             color={isDarkTheme ? 'white' : "#2e2e2e"} 
@@ -61,6 +66,7 @@ const HomePage = () => {
             }}
           />
         }
+        data={news}
       />
     </section>
   )
