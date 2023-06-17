@@ -6,12 +6,11 @@ import "./Article.css"
 interface ArticleProps{
   headline: string,
   description: string,
-  imageSrc: string,
   link: string, 
-  site: string,
+  siteName: string,
 }
 
-const Article = ({ headline, description, imageSrc, link, site } : ArticleProps) => {
+const Article = ({ headline, description, link, siteName } : ArticleProps) => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
 
   return (
@@ -24,17 +23,10 @@ const Article = ({ headline, description, imageSrc, link, site } : ArticleProps)
           {
           description && 
             <div className="description">
-              {description.split(". ")[0] + '.'}
+              {(description.split('. ')[0] + '.').replace('..', '.')}
             </div>
           }
         </div>
-        <img 
-          className='articleThumbnail' 
-          src={'/public/images/placeholder_article_image.png'}
-          alt="Article image" 
-          width={150} 
-          height={150}
-        />
       </div>
       <div className="bottom">
         <a 
@@ -42,7 +34,7 @@ const Article = ({ headline, description, imageSrc, link, site } : ArticleProps)
           target='_blank' 
           rel='noopener noreferrer'
         >
-          Read more on {site.toUpperCase()}
+          Read more on {siteName}
           <div>
             <ReadIcon size={15}/>
           </div>

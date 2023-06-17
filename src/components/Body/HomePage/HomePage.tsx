@@ -45,7 +45,7 @@ const HomePage = () => {
       <Chart 
         title="Popular Trends" 
         subtitle="Top 10 most popular cryptocurrencies"
-        icon={<TrendIcon color={"firebrick"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
+        icon={<TrendIcon color={"red"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={popularCurrencies}
       />
       <Chart

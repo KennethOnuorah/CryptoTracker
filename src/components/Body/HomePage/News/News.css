@@ -29,6 +29,7 @@
 .news .articles{
   display: grid;
   grid-template-columns: auto auto auto;
+  align-items: center;
   gap: 1rem;
 }
 

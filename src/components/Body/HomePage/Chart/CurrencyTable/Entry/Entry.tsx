@@ -1,4 +1,7 @@
+import { useEffect, useRef } from 'react'
+import { useCountUp } from 'use-count-up'
 import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
+
 import { setFavoritesList } from '../../../../../../../redux/slices/favorites'
 
 import { HiOutlineStar as StarEmptyIcon, HiStar as StarFilledIcon } from 'react-icons/hi'
@@ -16,21 +19,44 @@ interface EntryProps{
   marketCap: number,
 }
 
-const Entry = ({ 
-  index,
-  logoSrc,
-  name,
-  abbreviation,
-  price,
-  dayChange,
-  marketCap,
- } : EntryProps) => {
+const Entry = ({ index, logoSrc, name, abbreviation, price, dayChange, marketCap } : EntryProps) => {
   const dispatch = useAppDispatch()
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   const allFavorites = useAppSelector(state => state.favoritesReducer.favoritesList)
 
   const isPriceDeclining = dayChange < 0
   const isFavorite = allFavorites.includes(name)
+
+  const previousCountedPrice = useRef(price)
+  const previousCountedDayChange = useRef(dayChange)
+
+  const { value: countedPrice, reset: resetCountedPrice } = useCountUp({
+    isCounting: true,
+    decimalPlaces: Number.isInteger(price) ? 0 : 2,
+    thousandsSeparator: ',',
+    start: previousCountedPrice.current,
+    end: price,
+    duration: 3.5,
+    onComplete: () => {
+      previousCountedPrice.current = price
+    },
+  })
+
+  const { value: countedDayChange, reset: resetCountedDayChange } = useCountUp({
+    isCounting: true,
+    decimalPlaces: 2,
+    start: previousCountedDayChange.current,
+    end: dayChange,
+    duration: 3.5,
+    onComplete: () => {
+      previousCountedDayChange.current = dayChange
+    },
+  })
+
+  useEffect(() => {
+    resetCountedPrice()
+    resetCountedDayChange()
+  }, [price, dayChange])
 
   return (
     <tr className={`tableEntry${isDarkTheme ? ' darkTableEntry' : ''}`}>
@@ -49,8 +75,13 @@ const Entry = ({
           </div>
         </a>
       </th>
-      <th className="price">
-        ${price.toLocaleString()}
+      <th 
+        className="price"
+        style={{
+          animation: isPriceDeclining ? "redPulse 1s forwards" : "greenPulse 1s forwards"
+        }}
+      >
+        ${countedPrice?.toLocaleString()}
       </th>
       <th   
         className="24hChange"
@@ -59,7 +90,7 @@ const Entry = ({
           transition: "color 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
         }}
       >
-        {dayChange > 0 ? '+' : ''}{dayChange.toFixed(2)}%
+        {dayChange > 0 ? '+' : ''}{countedDayChange?.toLocaleString()}%
       </th>
       <th className="marketCap">${abbreviate(marketCap)}</th>
       <th>

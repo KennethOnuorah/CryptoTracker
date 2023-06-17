@@ -104,3 +104,27 @@
     transform: rotateZ(0deg) scale(1.25, 1.25);
   }
 }
+
+@keyframes redPulse {
+  0%{
+    color: white;
+  }
+  50%{
+    color: red;
+  }
+  100%{
+    color: white
+  }
+}
+
+@keyframes greenPulse {
+  0%{
+    color: white;
+  }
+  50%{
+    color: rgb(0, 255, 0);
+  }
+  100%{
+    color: white
+  }
+}

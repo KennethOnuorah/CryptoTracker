@@ -14,7 +14,6 @@ interface useIntervalFetchProps<T>{
 
 const useIntervalFetch = <T,>({ URL, interval, checkpoint, action, fetchID } : useIntervalFetchProps<T>) => {
   const dispatch = useAppDispatch()
-
   const fetch = async(): Promise<void> => {
     try {
       const timeLastFetched = JSON.parse(localStorage.getItem(`time_last_fetched_${fetchID}`) as string)
@@ -22,12 +21,16 @@ const useIntervalFetch = <T,>({ URL, interval, checkpoint, action, fetchID } : u
       if(!hasPassedCheckpoint) return
       const res = await axios.get(URL)
       dispatch(action(res.data))
-      console.log(`[${new Date().toLocaleTimeString('en-US')}] Response received from: \n${URL}`) 
+      console.log(`[${new Date().toLocaleTimeString('en-US')}] Response received from: \n${URL.slice(0, 40)}...`) 
     }
     catch (e) {
       console.error("Error:", e)
     }
   }
+
+  useEffect(() => {
+    fetch()
+  }, [])
 
   useEffect(() => {
     const intervalId = setInterval(() => fetch(), interval)

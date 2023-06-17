@@ -2,21 +2,6 @@ interface PriceTimeline{
   price: number[]
 }
 
-export type NewsArticle = {
-  title: string,
-  link: string,
-  keywords: string[],
-  creator: string,
-  video_url: string,
-  description: string,
-  content: string,
-  image_url: string,
-  source_id: string,
-  category: string[],
-  country: string[],
-  language: string,
-}
-
 export type CoinData = {
   id: string,
   symbol: string,
@@ -48,8 +33,24 @@ export type CoinData = {
   price_change_percentage_7d_in_currency?: number,
 }
 
+type Source = {
+  id: string,
+  name: string
+}
+
+export type NewsArticle = {
+  source: Source
+  author: string,
+  title: string,
+  description: string,
+  url: string,
+  urlToImage: string,
+  publishedAt: string,
+  content: string
+}
+
 export type NewsData = {
   status: string,
   totalResults: number,
-  results: Article[],
+  articles: NewsArticle[],
 }
