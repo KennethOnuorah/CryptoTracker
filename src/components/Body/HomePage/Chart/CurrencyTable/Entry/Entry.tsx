@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
 
 import { setFavoritesList } from '../../../../../../../redux/slices/favorites'
 
-import { HiOutlineStar as StarEmptyIcon, HiStar as StarFilledIcon } from 'react-icons/hi'
+import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 'react-icons/hi'
 import { abbreviate } from '../../../../../../utils/abbreviate'
 
 import "./Entry.css"
@@ -19,14 +19,15 @@ interface EntryProps{
   marketCap: number,
 }
 
-const Entry = ({ index, logoSrc, name, abbreviation, price, dayChange, marketCap } : EntryProps) => {
+const Entry = ({index, logoSrc, name, abbreviation, price, dayChange, marketCap} : EntryProps) => {
   const dispatch = useAppDispatch()
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   const allFavorites = useAppSelector(state => state.favoritesReducer.favoritesList)
 
   const isPriceDeclining = dayChange < 0
-  const isFavorite = allFavorites.includes(name)
+  const isFavorited = allFavorites.includes(name)
 
+  const priceRef = useRef<HTMLTableCellElement>(null)
   const previousCountedPrice = useRef(price)
   const previousCountedDayChange = useRef(dayChange)
 
@@ -54,9 +55,14 @@ const Entry = ({ index, logoSrc, name, abbreviation, price, dayChange, marketCap
   })
 
   useEffect(() => {
+    if(priceRef.current === null) return
+    priceRef.current.style.animation = isPriceDeclining ? '' : "grow 0.5s forwards"
+  }, [previousCountedPrice.current])
+
+  useEffect(() => {
     resetCountedPrice()
     resetCountedDayChange()
-  }, [price, dayChange])
+  }, [previousCountedPrice.current, previousCountedDayChange.current])
 
   return (
     <tr className={`tableEntry${isDarkTheme ? ' darkTableEntry' : ''}`}>
@@ -77,13 +83,11 @@ const Entry = ({ index, logoSrc, name, abbreviation, price, dayChange, marketCap
       </th>
       <th 
         className="price"
-        style={{
-          animation: isPriceDeclining ? "redPulse 1s forwards" : "greenPulse 1s forwards"
-        }}
+        ref={priceRef}
       >
         ${countedPrice?.toLocaleString()}
       </th>
-      <th   
+      <th
         className="24hChange"
         style={{ 
           color: isPriceDeclining ? "red" : "green", 
@@ -97,7 +101,7 @@ const Entry = ({ index, logoSrc, name, abbreviation, price, dayChange, marketCap
         <button 
           className='favoriteBtn' 
           onClick={() => {
-            if(!isFavorite){
+            if(!isFavorited){
               dispatch(setFavoritesList([...allFavorites, name]))
             }else{
               const updatedFavorites = allFavorites.filter(fav => fav !== name)
@@ -105,13 +109,13 @@ const Entry = ({ index, logoSrc, name, abbreviation, price, dayChange, marketCap
             }
           }}
         >
-          {isFavorite ? 
-            <StarFilledIcon 
+          {isFavorited ? 
+            <HeartFilledIcon 
               size={20} 
               color={'goldenrod'}
               style={{ transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"}}
             /> : 
-            <StarEmptyIcon 
+            <HeartEmptyIcon 
               size={20} 
               color={isDarkTheme ? 'white' : 'black'}
               style={{ transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)"}}

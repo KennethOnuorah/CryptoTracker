@@ -69,6 +69,14 @@
   border-radius: 10px;
 }
 
+.headerContainer .left .sideMenuBtn{
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .headerContainer .searchField .submitEntry,
 .headerContainer .searchField .searchBar{
   display: flex;
@@ -85,7 +93,7 @@
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .headerContainer .searchField .submitEntry:hover,
 .headerContainer .searchField .submitEntry:focus {
@@ -105,20 +113,5 @@
 @media screen and (max-width: 765px){
   .header {
     padding: 20px 40px;
-  }
-}
-
-@media screen and (max-width: 590px){
-  .headerContainer {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .headerContainer .appName{
-    font-size: 2.875em;
-  }
-
-  .headerContainer .searchField .searchBar{
-    font-size: 1.15em;
   }
 }

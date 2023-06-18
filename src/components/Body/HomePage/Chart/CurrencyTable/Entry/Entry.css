@@ -105,26 +105,14 @@
   }
 }
 
-@keyframes redPulse {
+@keyframes grow {
   0%{
-    color: white;
+    transform: scale(1, 1);
   }
   50%{
-    color: red;
+    transform: scale(1.1, 1.1);
   }
   100%{
-    color: white
-  }
-}
-
-@keyframes greenPulse {
-  0%{
-    color: white;
-  }
-  50%{
-    color: rgb(0, 255, 0);
-  }
-  100%{
-    color: white
+    transform: scale(1, 1);
   }
 }
