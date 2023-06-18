@@ -10,7 +10,7 @@ import { CURRENCY_API_URL, NEWS_API_URL } from "../../../helpers/links"
 import { CoinData } from "../../../helpers/types"
 
 import { ImFire as TrendIcon } from 'react-icons/im'
-import { IoStar as FavoriteIcon } from 'react-icons/io5'
+import { IoHeart as FavoriteIcon } from 'react-icons/io5'
 import { HiNewspaper as NewsIcon } from 'react-icons/hi2'
 
 import "./HomePage.css"
@@ -50,7 +50,7 @@ const HomePage = () => {
       />
       <Chart
         title="Favorites"
-        icon={<FavoriteIcon color={"goldenrod"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
+        icon={<FavoriteIcon color={"red"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={favoriteCurrencies}
       />
       <News
