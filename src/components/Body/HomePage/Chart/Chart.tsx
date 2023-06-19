@@ -40,12 +40,36 @@ const Chart = ({ title, subtitle, icon, data } : ChartProps) => {
       </div>
       <CurrencyTable 
         fields={[
-          "#", 
-          "Name", 
-          "Price", 
-          <ChangeIcon size={20} style={{flexShrink: 0, transform: 'translateY(3px)'}}/>, 
-          "Market Cap", 
-          ""
+          {
+            name: '#',
+            styledName: '#',
+            sortType: 'market_cap_rank'
+          },
+          {
+            name: 'name',
+            styledName: 'Name',
+            sortType: 'name',
+          },
+          {
+            name: 'price',
+            styledName: 'Price',
+            sortType: 'current_price'
+          },
+          {
+            name: 'dayChange',
+            styledName: <ChangeIcon size={20} style={{flexShrink: 0, transform: 'translateY(3px)'}}/>,
+            sortType: 'price_change_24h',
+          },
+          {
+            name: 'marketCap',
+            styledName: 'Market Cap',
+            sortType: 'market_cap',
+          },
+          {
+            name: '',
+            styledName: '',
+            sortType: 'market_cap_rank',
+          },
         ]}
         data={data}
         
