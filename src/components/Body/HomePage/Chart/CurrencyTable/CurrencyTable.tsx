@@ -16,7 +16,16 @@ const CurrencyTable = ({ fields, data } : CurrencyTableProps) => {
   const [sortBy, setSortBy] = useState<SortType>('market_cap')
   const [isDataDescending, setIsDataDescending] = useState(true)
   
-  const orderedData = _.orderBy(data, data => data[sortBy].toString().toLowerCase(), isDataDescending ? 'desc' : 'asc')
+  const orderedData = _.orderBy(
+    data, 
+    data => {
+    if(typeof data[sortBy] === 'string'){
+      return data[sortBy].toString().toLowerCase()
+    }else{
+      return data[sortBy]
+    }
+  }, 
+  isDataDescending ? 'desc' : 'asc')
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   
   return (
