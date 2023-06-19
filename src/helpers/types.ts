@@ -1,7 +1,7 @@
-interface PriceTimeline{
+//CURRENCY
+type PriceTimeline = {
   price: number[]
 }
-
 export type CoinData = {
   id: string,
   symbol: string,
@@ -32,12 +32,18 @@ export type CoinData = {
   sparkline_in_7d?: PriceTimeline,
   price_change_percentage_7d_in_currency?: number,
 }
+export type FieldProperty = {
+  name: string,
+  styledName: string | JSX.Element,
+  sortType: SortType
+}
+export type SortType = 'market_cap_rank' | 'name' | 'current_price' | 'price_change_24h' | 'market_cap'
 
+//NEWS
 type Source = {
   id: string,
   name: string
 }
-
 export type NewsArticle = {
   source: Source
   author: string,
@@ -48,7 +54,6 @@ export type NewsArticle = {
   publishedAt: string,
   content: string
 }
-
 export type NewsData = {
   status: string,
   totalResults: number,

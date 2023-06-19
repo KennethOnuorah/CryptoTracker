@@ -19,11 +19,20 @@
   padding: 10px 20px;
 }
 
-.currencyTable .fields .Name{
+.currencyTable .fields th button{
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.currencyTable .fields .name{
   text-align: left;
 }
 
-.currencyTable .fields .Price{
+.currencyTable .fields .price{
   text-align: right;
 }
 
