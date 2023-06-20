@@ -3,12 +3,12 @@ import _ from 'lodash'
 
 import Entry from "./Entry/Entry"
 import { useAppSelector } from "../../../../../hooks/redux"
-import { CoinData, FieldProperty, SortType } from "../../../../../helpers/types"
+import { CoinData, FieldProperties, SortType } from "../../../../../helpers/types"
 
 import "./CurrencyTable.css"
 
 interface CurrencyTableProps{
-  fields: FieldProperty[],
+  fields: FieldProperties[],
   data: CoinData[],
 }
 
@@ -42,6 +42,9 @@ const CurrencyTable = ({ fields, data } : CurrencyTableProps) => {
                   onClick={() => {
                     setSortBy(f.sortType)
                     setIsDataDescending(!isDataDescending)
+                  }}
+                  style={{
+                    color: isDarkTheme ? 'white' : 'black'
                   }}
                 >
                   {f.styledName}

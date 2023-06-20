@@ -1,12 +1,15 @@
+import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import useViewportDimensions from '../../hooks/useViewportDimensions'
+
 import { toggleDarkTheme } from '../../../redux/slices/colorTheme'
 
+import { CgClose as CloseHeader } from 'react-icons/cg' 
 import { RxMagnifyingGlass as Search } from 'react-icons/rx'
 import { 
   HiOutlineSun as LightIcon, 
   HiOutlineMoon as DarkIcon,
-  HiOutlineMenu as MenuIcon 
+  HiOutlineMenu as OpenHeader 
 } from 'react-icons/hi'
 
 import "./Header.css"
@@ -14,10 +17,10 @@ import "./Header.css"
 const Header = () => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   const dispatch = useAppDispatch()
-
   const dimensions = useViewportDimensions()
-
-  const desktopSearchSection = (
+  const [isHeaderExpanded, setIsHeaderExpanded] = useState(false)
+  
+  const searchSection = (
     <>  
       <button 
         className={`toggleColorTheme${isDarkTheme ? ' darkToggleColorTheme' : ''}`}
@@ -40,7 +43,12 @@ const Header = () => {
   )
 
   return (
-    <header className={`header${isDarkTheme ? ' darkHeader' : ''}`}>
+    <header 
+      className={`header${isDarkTheme ? ' darkHeader' : ''}`}
+      style={{
+        height: dimensions.width <= 590 ? isHeaderExpanded ? '128px' : '68px' : 'auto'
+      }}
+    >
       <div className="headerContainer">
         <a href="http://github.com/KennethOnuorah/CryptoTracker" target="_blank" rel="noopener noreferrer">
           <div className="appName">
@@ -49,13 +57,24 @@ const Header = () => {
         </a>
         <div className='left'>
           {dimensions.width >= 590 ? 
-            desktopSearchSection :
-            <button className='sideMenuBtn'>
-              <MenuIcon color={isDarkTheme ? 'white' : 'black'} size={30}/>
+            searchSection :
+            <button 
+              className='expandHeaderBtn'
+              onClick={() => setIsHeaderExpanded(!isHeaderExpanded)}
+            >
+              {isHeaderExpanded ?
+                <CloseHeader color={isDarkTheme ? 'white' : 'black'} size={25}/> :
+                <OpenHeader color={isDarkTheme ? 'white' : 'black'} size={25}/>
+              }
             </button>
           }
         </div>
       </div>
+      {dimensions.width <= 590 && 
+        <div className='mobileSearchContainer'>
+          {searchSection}
+        </div>
+      }
     </header>
   )
 }

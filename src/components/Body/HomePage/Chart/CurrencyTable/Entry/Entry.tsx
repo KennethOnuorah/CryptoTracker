@@ -90,11 +90,11 @@ const Entry = ({index, logoSrc, name, abbreviation, price, dayChange, marketCap}
       <th
         className="24hChange"
         style={{ 
-          color: isPriceDeclining ? "red" : "green", 
+          color: countedDayChange as number > 0 ? "green" : "red", 
           transition: "color 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
         }}
       >
-        {dayChange > 0 ? '+' : ''}{countedDayChange?.toLocaleString()}%
+        {countedDayChange as number > 0 ? '+' : ''}{countedDayChange?.toLocaleString()}%
       </th>
       <th className="marketCap">${abbreviate(marketCap)}</th>
       <th>

@@ -32,12 +32,12 @@ export type CoinData = {
   sparkline_in_7d?: PriceTimeline,
   price_change_percentage_7d_in_currency?: number,
 }
-export type FieldProperty = {
+export type FieldProperties = {
   name: string,
   styledName: string | JSX.Element,
   sortType: SortType
 }
-export type SortType = 'market_cap_rank' | 'name' | 'current_price' | 'price_change_24h' | 'market_cap'
+export type SortType = 'market_cap_rank' | 'name' | 'current_price' | 'price_change_percentage_24h' | 'market_cap'
 
 //NEWS
 type Source = {
