@@ -28,6 +28,9 @@
 }
 
 .headerContainer .appName{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: goldenrod;
   font-size: x-large;
   font-weight: 500;
@@ -148,10 +151,4 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   flex-grow: 2;
-}
-
-@media screen and (max-width: 765px){
-  .header {
-    padding: 20px 40px;
-  }
 }

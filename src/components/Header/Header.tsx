@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import useViewportDimensions from '../../hooks/useViewportDimensions'
 
@@ -19,6 +19,11 @@ const Header = () => {
   const dispatch = useAppDispatch()
   const dimensions = useViewportDimensions()
   const [isHeaderExpanded, setIsHeaderExpanded] = useState(false)
+
+  useEffect(() => {
+    if(dimensions.width <= 660) return
+    setIsHeaderExpanded(false)
+  }, [dimensions.width])
   
   const searchSection = (
     <>  
@@ -46,17 +51,18 @@ const Header = () => {
     <header 
       className={`header${isDarkTheme ? ' darkHeader' : ''}`}
       style={{
-        height: dimensions.width <= 590 ? isHeaderExpanded ? '128px' : '68px' : 'auto'
+        height: dimensions.width <= 660 ? isHeaderExpanded ? '128px' : '68px' : 'auto'
       }}
     >
       <div className="headerContainer">
         <a href="http://github.com/KennethOnuorah/CryptoTracker" target="_blank" rel="noopener noreferrer">
           <div className="appName">
+            <img src="/images/app_logo.svg" alt="app_logo" width={24} style={{transform: 'translateY(2px)'}}/>
             CryptoTra¢ker
           </div>
         </a>
         <div className='left'>
-          {dimensions.width >= 590 ? 
+          {dimensions.width >= 660 ? 
             searchSection :
             <button 
               className='expandHeaderBtn'
@@ -70,7 +76,7 @@ const Header = () => {
           }
         </div>
       </div>
-      {dimensions.width <= 590 && 
+      {dimensions.width <= 660 && 
         <div className='mobileSearchContainer'>
           {searchSection}
         </div>
