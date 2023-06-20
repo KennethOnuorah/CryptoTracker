@@ -44,7 +44,7 @@ const HomePage = () => {
     <section className="homepage">
       <Chart 
         title="Popular Trends" 
-        subtitle="Top 10 most popular tokens"
+        subtitle="The top 10 most popular tokens"
         icon={<TrendIcon color={"red"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={popularCurrencies}
       />

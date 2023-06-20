@@ -58,7 +58,7 @@ const Chart = ({ title, subtitle, icon, data } : ChartProps) => {
           {
             name: 'dayChange',
             styledName: <ChangeIcon size={20} style={{flexShrink: 0, transform: 'translateY(3px)'}}/>,
-            sortType: 'price_change_24h',
+            sortType: 'price_change_percentage_24h',
           },
           {
             name: 'marketCap',
