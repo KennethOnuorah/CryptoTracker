@@ -1,7 +1,8 @@
-import { configureStore, } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
 
-import currenciesReducer from './slices/currencies'
+import lineChartReducer from './slices/lineChart'
 import colorThemeReducer from './slices/colorTheme'
+import currenciesReducer from './slices/currencies'
 import favoritesReducer from './slices/favorites'
 import newsReducer from './slices/news'
 
@@ -28,10 +29,11 @@ const persistedStore = loadState()
 
 export const store = configureStore({
   reducer: {
+    lineChartReducer,
     currenciesReducer,
     colorThemeReducer,
     favoritesReducer,
-    newsReducer
+    newsReducer,
   },
   preloadedState: persistedStore
 })
