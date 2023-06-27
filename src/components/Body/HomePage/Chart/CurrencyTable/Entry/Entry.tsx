@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
 import { setFavoritesList } from '../../../../../../../redux/slices/favorites'
 
 import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 'react-icons/hi'
-import { abbreviate } from '../../../../../../utils/abbreviate'
+import { abbreviate } from '../../../../../../utils/abbreviateNumber'
 
 import "./Entry.css"
 

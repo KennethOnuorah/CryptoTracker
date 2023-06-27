@@ -1,7 +1,4 @@
 //CURRENCY
-type PriceTimeline = {
-  price: number[]
-}
 export type CoinData = {
   id: string,
   symbol: string,
@@ -29,7 +26,9 @@ export type CoinData = {
   atl_date: string,
   roi: any,
   last_updated: string,
-  sparkline_in_7d?: PriceTimeline,
+  sparkline_in_7d?: {
+    price: number[]
+  },
   price_change_percentage_7d_in_currency?: number,
 }
 export type FieldProperties = {
@@ -59,3 +58,10 @@ export type NewsData = {
   totalResults: number,
   articles: NewsArticle[],
 }
+
+//GRAPHS
+export type Coordinate = {
+  x: number | string,
+  y: number
+}
+export type TimeFilter = '1d' | '3d' | '5d' | '7d'
