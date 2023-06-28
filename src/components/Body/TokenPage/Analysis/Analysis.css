@@ -3,30 +3,35 @@
   max-width: 800px;
 }
 
-.analysis .currency{
+.analysis .analyzedCurrency{
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.analysis .currency .left{
+.analysis .analyzedCurrency .leftSection{
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.analysis .currency .fullName{
+.analysis .analyzedCurrency .fullName{
   font-size: x-large;
   font-weight: 500;
   margin-right: 5px;
 }
-.analysis .currency .symbol{
+.analysis .analyzedCurrency .symbol{
   font-size: medium;
   color: rgb(89, 89, 89);
   font-weight: 500;
 }
 
-.analysis .currency .addToFavorites{
+.analysis .analyzedCurrency .rightSection{
+  display: flex;
+  gap: 1.5rem;
+}
+
+.analysis .analyzedCurrency .addToFavorites{
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -39,7 +44,7 @@
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.analysis .currency .addToFavorites:hover{
+.analysis .analyzedCurrency .addToFavorites:hover{
   color: rgb(175, 133, 26);
 }
 
@@ -67,6 +72,7 @@
 
 .analysis .graph .currentPrice .priceChange{
   font-size: x-large;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .analysis .graph .options{
