@@ -1,30 +1,30 @@
-import { useState } from 'react'
 import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 
-import { abbreviate } from '../utils/abbreviateNumber'
+import { abbreviateNumber } from '../utils/abbreviateNumber'
 import { Coordinate, TimeFilter } from '../helpers/types'
 
 import "./LineChart.css"
-import { subtractHours } from '../utils/subtractHours'
 
 interface LineChartProps{
   plotData: Coordinate[],
+  plotName: string,
+  color: string
   yLabel: string,
   timeFilter: TimeFilter,
-  timeLastUpdated: string
 }
 
-const LineChart = ({ plotData, yLabel, timeFilter, timeLastUpdated } : LineChartProps) => {
+const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChartProps) => {
 
   const options: ApexOptions = {
     chart: {
-      id: "linechart",
+      id: `${plotName.toLowerCase()}_linechart`,
       toolbar: {
-        show: false
+        show: true,
+        
       },
     },
-    colors: ['#DAA520'],
+    colors: [color],
     dataLabels: {
       enabled: false,
     },
@@ -40,12 +40,12 @@ const LineChart = ({ plotData, yLabel, timeFilter, timeLastUpdated } : LineChart
     },
     grid: {
       padding: {
-        right: -15,
+        right: 35,
       },
     },
     stroke:{
       width: 2,
-      colors: ['#DAA520'],
+      colors: [color],
       curve: 'straight',
     },
     tooltip:{
@@ -63,6 +63,7 @@ const LineChart = ({ plotData, yLabel, timeFilter, timeLastUpdated } : LineChart
           return timeFilter === '1d' ? value?.split(', ')[1] : value
         },
         showDuplicates: false,
+        hideOverlappingLabels: true
       },
       crosshairs:{
         stroke: {
@@ -74,8 +75,8 @@ const LineChart = ({ plotData, yLabel, timeFilter, timeLastUpdated } : LineChart
       tickAmount: parseInt(timeFilter.slice(0, 1)),
       tickPlacement: 'between',
       axisTicks: {
-        borderType: 'dotted',
-        show: false
+        borderType: 'solid',
+        show: false,
       },
       axisBorder: {
         show: false,
@@ -87,7 +88,7 @@ const LineChart = ({ plotData, yLabel, timeFilter, timeLastUpdated } : LineChart
     yaxis: {
       labels: {
         formatter(value) {
-          return "$" + abbreviate(value)
+          return "$" + abbreviateNumber(value, 2)
         },
         offsetY: 3,
       },

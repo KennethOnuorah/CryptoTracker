@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
 import { setFavoritesList } from '../../../../../../../redux/slices/favorites'
 
 import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 'react-icons/hi'
-import { abbreviate } from '../../../../../../utils/abbreviateNumber'
+import { abbreviateNumber } from '../../../../../../utils/abbreviateNumber'
 
 import "./Entry.css"
 
@@ -24,12 +24,10 @@ const Entry = ({index, logoSrc, name, abbreviation, price, dayChange, marketCap}
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   const allFavorites = useAppSelector(state => state.favoritesReducer.favoritesList)
 
-  const isPriceDeclining = dayChange < 0
   const isFavorited = allFavorites.includes(name)
 
-  const priceRef = useRef<HTMLTableCellElement>(null)
-  const previousCountedPrice = useRef(price)
-  const previousCountedDayChange = useRef(dayChange)
+  const previousCountedPrice = useRef(0)
+  const previousCountedDayChange = useRef(0)
 
   const { value: countedPrice, reset: resetCountedPrice } = useCountUp({
     isCounting: true,
@@ -55,11 +53,6 @@ const Entry = ({index, logoSrc, name, abbreviation, price, dayChange, marketCap}
   })
 
   useEffect(() => {
-    if(priceRef.current === null) return
-    priceRef.current.style.animation = isPriceDeclining ? '' : "grow 0.5s forwards"
-  }, [previousCountedPrice.current])
-
-  useEffect(() => {
     resetCountedPrice()
     resetCountedDayChange()
   }, [previousCountedPrice.current, previousCountedDayChange.current])
@@ -81,10 +74,7 @@ const Entry = ({index, logoSrc, name, abbreviation, price, dayChange, marketCap}
           </div>
         </a>
       </th>
-      <th 
-        className="price"
-        ref={priceRef}
-      >
+      <th className="price">
         ${countedPrice?.toLocaleString()}
       </th>
       <th
@@ -96,7 +86,7 @@ const Entry = ({index, logoSrc, name, abbreviation, price, dayChange, marketCap}
       >
         {countedDayChange as number > 0 ? '+' : ''}{countedDayChange?.toLocaleString()}%
       </th>
-      <th className="marketCap">${abbreviate(marketCap)}</th>
+      <th className="marketCap">${abbreviateNumber(marketCap, 1)}</th>
       <th>
         <button 
           className='favoriteBtn' 

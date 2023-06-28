@@ -1,11 +1,11 @@
 import Analysis from './Analysis/Analysis'
 import { FiChevronRight as To } from 'react-icons/fi'
 
-import './CurrencyPage.css'
+import './TokenPage.css'
 
-const CurrencyPage = () => {
+const TokenPage = () => {
   return (
-    <section className='currencyPage'>
+    <section className='tokenPage'>
       <div className="top">
         <div className='pagePath'>
           <button className='homeBtn'>
@@ -15,7 +15,7 @@ const CurrencyPage = () => {
             <To color={'grey'}/>
           </span>
           <button className='thisPageBtn'>
-            Bitcoin Price
+            [**Token Name Here**] Price
           </button>
         </div>
       </div>
@@ -29,4 +29,4 @@ const CurrencyPage = () => {
   )
 }
 
-export default CurrencyPage
+export default TokenPage

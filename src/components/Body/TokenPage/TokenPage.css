@@ -1,20 +1,20 @@
-.currencyPage{
+.tokenPage{
   padding: 20px 40px;
 }
 
-.currencyPage .top{
+.tokenPage .top{
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.currencyPage .top .pagePath{
+.tokenPage .top .pagePath{
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
 }
-.currencyPage .top .pagePath .pathArrow svg{
+.tokenPage .top .pagePath .pathArrow svg{
   width: 1em;
   height: 1em;
   display: inline-block;
@@ -25,7 +25,7 @@
   color: currentColor;
   vertical-align: middle;
 }
-.currencyPage .top .pagePath button{
+.tokenPage .top .pagePath button{
   font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Helvetica','Arial',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
   background-color: transparent;
   border: none;
@@ -34,14 +34,14 @@
   cursor: pointer;
 }
 
-.currencyPage .analytics{
+.tokenPage .analytics{
   display: flex;
   flex-direction: row;
   align-items: start;
   gap: 1.5rem;
 }
 
-.currencyPage .analytics .right{
+.tokenPage .analytics .right{
   background-color: white;
   padding: 25px;
   box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.106);

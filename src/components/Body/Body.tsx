@@ -1,5 +1,5 @@
 import HomePage from "./HomePage/HomePage"
-import CurrencyPage from "./CurrencyPage/CurrencyPage"
+import TokenPage from "./TokenPage/TokenPage"
 
 import "./Body.css"
 
@@ -7,7 +7,7 @@ const Body = () => {
   return (
     <main className="body">
       {/* <HomePage/> */}
-      <CurrencyPage/>
+      <TokenPage/>
     </main>
   )
 }
