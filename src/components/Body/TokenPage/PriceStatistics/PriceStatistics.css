@@ -1,0 +1,36 @@
+.priceStatistics{
+  background-color: white;
+  padding: 25px;
+  box-shadow: 0px 5px 15px 3px rgba(0, 0, 0, 0.106);
+  margin-top: 72px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.priceStatistics .title{
+  font-size: x-large;
+  font-weight: 500;
+}
+
+.priceStatistics .stats{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.priceStatistics .stats .columnTitles{
+  display: flex;
+  justify-content: space-between;
+}
+
+.priceStatistics .highLow{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.priceStatistics .highLow .title{
+  font-size: medium;
+}

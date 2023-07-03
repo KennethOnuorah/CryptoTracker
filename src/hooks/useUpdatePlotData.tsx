@@ -1,19 +1,20 @@
 import { useEffect } from 'react'
-import { useAppDispatch } from "./redux"
-import { setPlot } from "../../redux/slices/lineChart"
+import { useAppDispatch, useAppSelector } from "./redux"
+import { setCoordinates } from "../../redux/slices/lineChart"
 
 import { subtractHours } from '../utils/subtractHours'
 import { getStandardTime } from '../utils/getStandardTime'
-import { Coordinate, TimeFilter } from "../helpers/types"
+import { CoinData, Coordinate, TimeFilter } from "../helpers/types"
 
 interface UseUpdatePlotDataProps{
-  prices: number[],
-  timeLastUpdated: string,
+  prices: number[]
+  analyzedToken: CoinData
+  timeLastUpdated: string
   timeFilter: TimeFilter
 }
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-const filterPrices = (list: number[], filter: TimeFilter) => {
+const filterCoordinates = (list: Coordinate[], filter: TimeFilter) => {
   switch (filter) {
     case '1d':
       list = list?.slice(list.length - 24)
@@ -31,20 +32,23 @@ const filterPrices = (list: number[], filter: TimeFilter) => {
   }
 }
 
-const useUpdatePlotData = ({ prices, timeLastUpdated, timeFilter } : UseUpdatePlotDataProps, deps: any[]) => {
+const useUpdatePlotData = ({ prices, analyzedToken, timeLastUpdated, timeFilter } : UseUpdatePlotDataProps, deps: any[]) => {
   const dispatch = useAppDispatch()
+  const coordinates = useAppSelector(state => state.lineChartReducer.coordinates)
 
   useEffect(() => {
-    const newPrices = filterPrices(prices, timeFilter)
-    dispatch(setPlot(newPrices?.map((price, index): Coordinate => {
-      const x: Date = subtractHours(new Date(timeLastUpdated), (newPrices.length + 1) - index)
+    dispatch(setCoordinates(prices?.map((price, index): Coordinate => {
+      const x: Date = subtractHours(new Date(timeLastUpdated), (prices.length + 1) - index)
       const [,month,day,,time,,] = x.toString().split(' ')
       return {
         x: `${months.indexOf(month)}/${day}, ${getStandardTime(time)}`, 
         y: parseFloat(price.toFixed(2))
       }
     })))
-  }, deps)
+  }, [analyzedToken])
+
+    const currentPlotData = filterCoordinates(coordinates, timeFilter)
+    return currentPlotData
 }
 
 export default useUpdatePlotData
