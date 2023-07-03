@@ -2,22 +2,27 @@ import { createSlice } from '@reduxjs/toolkit'
 import { Coordinate } from '../../src/helpers/types'
 
 interface initialChartDataProps{
-  plotData: Coordinate[]
+  coordinates: Coordinate[]
+  currentPlot: Coordinate[]
 }
 
 const initialState: initialChartDataProps = {
-  plotData: []
+  coordinates: [],
+  currentPlot: []
 }
 
 export const lineChart = createSlice({
   name: 'lineChart',
   initialState,
   reducers: {
-    setPlot: (state, action): void => {
-      state.plotData = [...action.payload]
+    setCoordinates: (state, action): void => {
+      state.coordinates = [...action.payload]
+    },
+    setCurrentPlot: (state, action): void => {
+      state.currentPlot = [...action.payload]
     }
   }
 })
 
-export const { setPlot } = lineChart.actions
+export const { setCoordinates, setCurrentPlot } = lineChart.actions
 export default lineChart.reducer

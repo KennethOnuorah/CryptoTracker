@@ -1,0 +1,8 @@
+.apexcharts-tooltip {
+  filter: opacity(0.75);
+}
+
+div:has(> .apexchartslinechart){
+  display: flex;
+  justify-content: center;
+}

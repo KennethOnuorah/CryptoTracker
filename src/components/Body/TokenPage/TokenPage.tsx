@@ -1,4 +1,5 @@
 import Analysis from './Analysis/Analysis'
+import PriceStatistics from './PriceStatistics/PriceStatistics'
 import { FiChevronRight as To } from 'react-icons/fi'
 
 import './TokenPage.css'
@@ -21,9 +22,7 @@ const TokenPage = () => {
       </div>
       <div className='analytics'>
         <Analysis/>
-        <div className="right">
-          Right section
-        </div>
+        <PriceStatistics/>
       </div>
     </section>
   )

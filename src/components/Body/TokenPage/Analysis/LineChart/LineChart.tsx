@@ -1,27 +1,25 @@
 import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 
-import { abbreviateNumber } from '../utils/abbreviateNumber'
-import { Coordinate, TimeFilter } from '../helpers/types'
+import { abbreviateNumber } from '../../../../../utils/abbreviateNumber'
+import { Coordinate, TimeFilter } from '../../../../../helpers/types'
 
-import "./LineChart.css"
+import './LineChart.css'
 
 interface LineChartProps{
-  plotData: Coordinate[],
-  plotName: string,
-  color: string
-  yLabel: string,
-  timeFilter: TimeFilter,
+  plotData: Coordinate[]
+  plotName: string
+  color: string | undefined
+  yLabel: string
+  timeFilter: TimeFilter
 }
 
 const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChartProps) => {
-
   const options: ApexOptions = {
     chart: {
-      id: `${plotName.toLowerCase()}_linechart`,
+      id: plotName,
       toolbar: {
         show: true,
-        
       },
     },
     colors: [color],
@@ -38,14 +36,9 @@ const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChart
         inverseColors: true,
       }
     },
-    grid: {
-      padding: {
-        right: 35,
-      },
-    },
     stroke:{
       width: 2,
-      colors: [color],
+      colors: [color as string],
       curve: 'straight',
     },
     tooltip:{

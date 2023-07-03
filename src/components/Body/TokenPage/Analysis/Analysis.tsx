@@ -1,43 +1,51 @@
 import { useState, useRef, useEffect } from 'react'
-import { useAppSelector } from '../../../../hooks/redux'
-import { setCurrenciesData } from '../../../../../redux/slices/currencies'
+import { useAppSelector, useAppDispatch } from '../../../../hooks/redux'
 import useUpdatePlotData from '../../../../hooks/useUpdatePlotData'
 import useIntervalFetch from '../../../../hooks/useIntervalFetch'
 import { useCountUp } from 'use-count-up'
 
-import LineChart from '../../../LineChart'
+import { setCurrenciesData } from '../../../../../redux/slices/currencies'
+import { setFavoritesList } from '../../../../../redux/slices/favorites'
 
-import { TimeFilter } from '../../../../helpers/types'
+import LineChart from './LineChart/LineChart'
+import OtherTrackings from './OtherTrackings/OtherTrackings'
+import LineChartTimeFilter from './LineChartTimeFilter/LineChartTimeFilter'
+
+import { Coordinate, TimeFilter } from '../../../../helpers/types'
 import { CURRENCY_API_URL } from '../../../../helpers/links'
-import { HiOutlineHeart as HeartIcon } from 'react-icons/hi'
+import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 'react-icons/hi'
 
 import './Analysis.css'
-import OtherTrackings from './OtherTrackings/OtherTrackings'
 
 const Analysis = () => {
   //Example
-  const token = useAppSelector(state => state.currenciesReducer.data.filter(coin => coin.id === 'bitcoin'))
-  const plotData = useAppSelector(state => state.lineChartReducer.plotData)
-  const [timeFilter, setTimeFilter] = useState<TimeFilter>('1d')
+  const dispatch = useAppDispatch()
+  const token = useAppSelector(state => state.currenciesReducer.data)[3]
+  const favoritesList = useAppSelector(state => state.favoritesReducer.favoritesList)
+  const isTokenFavorited = favoritesList.includes(token.name)
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>('3d')
   const previousCountedPrice = useRef(0)
+
+  document.title = `CryptoTracker • ${token.name}`
 
   const { value: countedPrice, reset: resetCountedPrice } = useCountUp({
     isCounting: true,
-    decimalPlaces: Number.isInteger(token[0].current_price) ? 0 : 2,
+    decimalPlaces: Number.isInteger(token.current_price) ? 0 : 2,
     thousandsSeparator: ',',
     start: previousCountedPrice.current,
-    end: token[0].current_price,
+    end: token.current_price,
     duration: 3.5,
     onComplete: () => {
-      previousCountedPrice.current = token[0].current_price
+      previousCountedPrice.current = token.current_price
     },
   })
 
-  useUpdatePlotData({
-    prices: token[0].sparkline_in_7d?.price as number[], 
-    timeLastUpdated: token[0].last_updated,
+  const currentPlotData = useUpdatePlotData({
+    prices: token.sparkline_in_7d?.price as number[], 
+    analyzedToken: token,
+    timeLastUpdated: token.last_updated,
     timeFilter: timeFilter
-  }, [timeFilter, token[0].id])
+  }, [timeFilter])
 
   useIntervalFetch({
     URL: CURRENCY_API_URL,
@@ -55,16 +63,25 @@ const Analysis = () => {
     <section className='analysis'>
       <div className="analyzedCurrency">
         <div className='leftSection'>
-          <img src={token[0].image} alt="currencyImage" width={32}/>
+          <img src={token.image} alt="currencyImage" width={32}/>
           <div>
-            <span className='fullName'>{token[0].name}</span>
-            <span className='symbol'> {token[0].symbol.toUpperCase()}</span>
+            <span className='fullName'>{token.name}</span>
+            <span className='symbol'> {token.symbol.toUpperCase()}</span>
           </div>
         </div>
-        <button className='addToFavorites'>
-          <HeartIcon size={20}/>
-          Add to Favorites
-        </button>
+        <div className="rightSection">
+          <button 
+            className='addToFavorites'
+            onClick={() => {
+              isTokenFavorited ? 
+                dispatch(setFavoritesList(favoritesList.filter((f) => f !== token.name))) :
+                dispatch(setFavoritesList([...favoritesList, token.name]))
+            }}
+          >
+            {isTokenFavorited ? <HeartFilledIcon size={20}/> : <HeartEmptyIcon size={20}/>}
+            {isTokenFavorited ? 'Remove from Favorites' : "Add to Favorites"}
+          </button>
+        </div>
       </div>
       <div className="graph">
         <div className="heading">
@@ -73,52 +90,40 @@ const Analysis = () => {
             <span 
               className='priceChange'
               style={{
-                color: token[0].price_change_percentage_24h >= 0 ? 'green' : 'red'
+                color: token.price_change_percentage_24h >= 0 ? 'green' : 'red'
               }}
             >
-              {token[0].price_change_percentage_24h > 0 ? '+' : ''}
-              {token[0].price_change_percentage_24h.toFixed(2)}%
+              {token.price_change_percentage_24h > 0 ? '+' : ''}
+              {token.price_change_percentage_24h.toFixed(2)}%
             </span>
           </div>
           <div className='options'>
-            {token[0].name} Price Chart (USD) ({timeFilter === '1d' ? '24H' : timeFilter.toUpperCase()})
+            {token.name} Price Chart (USD) ({timeFilter === '1d' ? '24H' : timeFilter.toUpperCase()})
             <div className="timeFilters" role='group'>
-              <button 
-                onClick={() => setTimeFilter('1d')}
-                style={{
-                  backgroundColor: timeFilter === '1d' ? "#c0c0c0" : '#E5E5E5'
-                }}
-              >24H</button>
-              <button 
-                onClick={() => setTimeFilter('3d')}
-                style={{
-                  backgroundColor: timeFilter === '3d' ? "#c0c0c0" : '#E5E5E5'
-                }}
-              >3D</button>
-              <button 
-                onClick={() => setTimeFilter('5d')}
-                style={{
-                  backgroundColor: timeFilter === '5d' ? "#c0c0c0" : '#E5E5E5'
-                }}
-              >5D</button>
-              <button 
-                onClick={() => setTimeFilter('7d')}
-                style={{
-                  backgroundColor: timeFilter === '7d' ? "#c0c0c0" : '#E5E5E5'
-                }}
-              >7D</button>
+              <LineChartTimeFilter timeFilter='1d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                24H
+              </LineChartTimeFilter>
+              <LineChartTimeFilter timeFilter='3d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                3D
+              </LineChartTimeFilter>
+              <LineChartTimeFilter timeFilter='5d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                5D
+              </LineChartTimeFilter>
+              <LineChartTimeFilter timeFilter='7d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                7D
+              </LineChartTimeFilter>
             </div>
           </div>
         </div>
         <LineChart 
-          plotData={plotData}
-          plotName={`${token[0].name}_${timeFilter}`}
-          color='#DAA520'
+          plotData={currentPlotData as Coordinate[]} 
+          plotName={`${token.id}_linechart`}
+          color={token.price_change_percentage_24h >= 0 ? "#abc71f" : '#b00000'}
           yLabel='Price (USD)'
           timeFilter={timeFilter}
         />
         <OtherTrackings
-          data={token[0]}
+          data={token}
         />
       </div>
     </section>
