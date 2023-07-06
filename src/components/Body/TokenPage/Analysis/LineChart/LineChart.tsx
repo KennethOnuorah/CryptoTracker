@@ -5,6 +5,7 @@ import { abbreviateNumber } from '../../../../../utils/abbreviateNumber'
 import { Coordinate, TimeFilter } from '../../../../../helpers/types'
 
 import './LineChart.css'
+import { useAppSelector } from '../../../../../hooks/redux'
 
 interface LineChartProps{
   plotData: Coordinate[]
@@ -15,6 +16,8 @@ interface LineChartProps{
 }
 
 const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChartProps) => {
+  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+
   const options: ApexOptions = {
     chart: {
       id: plotName,
@@ -29,12 +32,16 @@ const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChart
     fill: {
       type: "gradient",
       gradient: {
-        shadeIntensity: 0.4,
+        type: 'vertical',
+        shadeIntensity: 0,
         opacityFrom: 0.6,
         opacityTo: 0.15,
         stops: [0, 100],
         inverseColors: true,
       }
+    },
+    grid: {
+      borderColor: isDarkTheme ? '#5a5a5a' : '#c1c1c1'
     },
     stroke:{
       width: 2,
@@ -56,12 +63,15 @@ const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChart
           return timeFilter === '1d' ? value?.split(', ')[1] : value
         },
         showDuplicates: false,
-        hideOverlappingLabels: true
+        hideOverlappingLabels: true,
+        style: {
+          colors: plotData.map(coord => isDarkTheme ? '#636363' : '#000000')
+        }
       },
       crosshairs:{
         stroke: {
           dashArray: 0,
-          color: '#00000018'
+          color: isDarkTheme ? '#777777ff' : '#00000018'
         }
       },
       categories: plotData.map(coord => coord.x),
@@ -84,6 +94,9 @@ const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChart
           return "$" + abbreviateNumber(value, 2)
         },
         offsetY: 3,
+        style: {
+          colors: plotData.map(coord => isDarkTheme ? '#636363' : '#000000')
+        },
       },
     },
   }
