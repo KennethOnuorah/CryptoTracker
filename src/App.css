@@ -9,7 +9,7 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);;
 }
 .darkApp{
-  background-color: #2b2a2a;
+  background-color: #1d1d1d;
 }
 
 input[type="search"]::-webkit-search-decoration,

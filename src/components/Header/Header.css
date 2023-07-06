@@ -13,8 +13,8 @@
 }
 
 .darkHeader{
-  background-color: black;
-  border-bottom-color: #393939;
+  background-color: rgb(0, 0, 0);
+  border-bottom-color: black;
 }
 
 .headerContainer {

@@ -1,30 +1,40 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { CoinData } from '../../src/helpers/types'
+import { CoinData, ExchangeData } from '../../src/helpers/types'
 
 interface initalCurrenciesProps{
-  isResponseReceived: boolean
-  data: CoinData[]
+  coinData: CoinData[]
+  exchangeData: ExchangeData
 }
 
 const initialState: initalCurrenciesProps = {
-  isResponseReceived: false,
-  data: [],
+  coinData: [],
+  exchangeData: {
+    "result": "",
+    "documentation": "",
+    "terms_of_use": "",
+    "time_last_update_unix": 0,
+    "time_last_update_utc": "0",
+    "time_next_update_unix": 0,
+    "time_next_update_utc": "0",
+    "base_code": "",
+    "conversion_rates": {}
+  }
 }
 
 export const currencies = createSlice({
   name: 'currencies',
   initialState,
   reducers: {
-    setResponseReceived: (state, action): void => {
-      state.isResponseReceived = action.payload
-    },
-    setCurrenciesData: (state, action): void => {
-      state.data = action.payload
+    setCoinData: (state, action): void => {
+      state.coinData = action.payload
       localStorage.setItem("time_last_fetched_crypto", JSON.stringify(Date.now()))
-      setResponseReceived(false)
+    },
+    setExchangeData: (state, action): void => {
+      state.exchangeData = {...action.payload}
+      localStorage.setItem("time_last_fetched_exchange", JSON.stringify(Date.now()))
     }
   }
 })
 
-export const { setResponseReceived, setCurrenciesData } = currencies.actions
+export const { setCoinData, setExchangeData } = currencies.actions
 export default currencies.reducer

@@ -32,7 +32,7 @@ const filterCoordinates = (list: Coordinate[], filter: TimeFilter) => {
   }
 }
 
-const useUpdatePlotData = ({ prices, analyzedToken, timeLastUpdated, timeFilter } : UseUpdatePlotDataProps, deps: any[]) => {
+const useUpdatePlotData = ({ prices, analyzedToken, timeLastUpdated, timeFilter } : UseUpdatePlotDataProps) => {
   const dispatch = useAppDispatch()
   const coordinates = useAppSelector(state => state.lineChartReducer.coordinates)
 
@@ -47,8 +47,8 @@ const useUpdatePlotData = ({ prices, analyzedToken, timeLastUpdated, timeFilter 
     })))
   }, [analyzedToken])
 
-    const currentPlotData = filterCoordinates(coordinates, timeFilter)
-    return currentPlotData
+  const currentPlotData = filterCoordinates(coordinates, timeFilter)
+  return currentPlotData
 }
 
 export default useUpdatePlotData

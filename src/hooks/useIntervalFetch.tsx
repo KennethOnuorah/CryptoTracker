@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { useAppDispatch } from "./redux"
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit"
 
-interface useIntervalFetchProps<T>{
+interface UseIntervalFetchProps<T>{
   URL: string,
   interval: number,
   checkpoint: number,
@@ -12,7 +12,7 @@ interface useIntervalFetchProps<T>{
   fetchID: string
 }
 
-const useIntervalFetch = <T,>({ URL, interval, checkpoint, action, fetchID } : useIntervalFetchProps<T>) => {
+const useIntervalFetch = <T,>({ URL, interval, checkpoint, action, fetchID } : UseIntervalFetchProps<T>) => {
   const dispatch = useAppDispatch()
   const fetch = async(): Promise<void> => {
     try {

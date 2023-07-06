@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 import Entry from "./Entry/Entry"
 import { useAppSelector } from "../../../../../hooks/redux"
-import { CoinData, FieldProperties, SortType } from "../../../../../helpers/types"
+import { CoinData, FieldProperties, CoinDataSortType } from "../../../../../helpers/types"
 
 import "./CurrencyTable.css"
 
@@ -13,7 +13,7 @@ interface CurrencyTableProps{
 }
 
 const CurrencyTable = ({ fields, data } : CurrencyTableProps) => {
-  const [sortBy, setSortBy] = useState<SortType>('market_cap')
+  const [sortBy, setSortBy] = useState<CoinDataSortType>('market_cap')
   const [isDataDescending, setIsDataDescending] = useState(true)
   
   const orderedData = _.orderBy(

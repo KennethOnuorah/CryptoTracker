@@ -4,7 +4,7 @@ import News from "./News/News"
 import { useAppSelector } from "../../../hooks/redux"
 import useIntervalFetch from "../../../hooks/useIntervalFetch"
 
-import { setCurrenciesData } from "../../../../redux/slices/currencies"
+import { setCoinData } from "../../../../redux/slices/currencies"
 import { setNews } from "../../../../redux/slices/news"
 import { CURRENCY_API_URL, NEWS_API_URL } from "../../../helpers/links"
 import { CoinData } from "../../../helpers/types"
@@ -17,7 +17,7 @@ import "./HomePage.css"
 
 const HomePage = () => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
-  const currenciesData = useAppSelector(state => state.currenciesReducer.data)
+  const currenciesData = useAppSelector(state => state.currenciesReducer.coinData)
   const favoritesList = useAppSelector(state => state.favoritesReducer.favoritesList)
   const news = useAppSelector(state => state.newsReducer.data)
 
@@ -28,7 +28,7 @@ const HomePage = () => {
     URL: CURRENCY_API_URL,
     interval: 60000,
     checkpoint: 360000,
-    action: setCurrenciesData,
+    action: setCoinData,
     fetchID: "crypto"
   })
 
@@ -43,7 +43,7 @@ const HomePage = () => {
   return (
     <section className="homepage">
       <Chart 
-        title="Popular Trends" 
+        title="Popular Tokens" 
         subtitle="The top 10 most popular tokens"
         icon={<TrendIcon color={"red"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={popularCurrencies}

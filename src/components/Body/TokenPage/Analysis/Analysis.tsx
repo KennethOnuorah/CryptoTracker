@@ -4,12 +4,12 @@ import useUpdatePlotData from '../../../../hooks/useUpdatePlotData'
 import useIntervalFetch from '../../../../hooks/useIntervalFetch'
 import { useCountUp } from 'use-count-up'
 
-import { setCurrenciesData } from '../../../../../redux/slices/currencies'
+import { setCoinData } from '../../../../../redux/slices/currencies'
 import { setFavoritesList } from '../../../../../redux/slices/favorites'
 
 import LineChart from './LineChart/LineChart'
-import OtherTrackings from './OtherTrackings/OtherTrackings'
 import LineChartTimeFilter from './LineChartTimeFilter/LineChartTimeFilter'
+import OtherTrackings from './OtherTrackings/OtherTrackings'
 
 import { Coordinate, TimeFilter } from '../../../../helpers/types'
 import { CURRENCY_API_URL } from '../../../../helpers/links'
@@ -20,7 +20,8 @@ import './Analysis.css'
 const Analysis = () => {
   //Example
   const dispatch = useAppDispatch()
-  const token = useAppSelector(state => state.currenciesReducer.data)[3]
+  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+  const token = useAppSelector(state => state.currenciesReducer.coinData)[0]
   const favoritesList = useAppSelector(state => state.favoritesReducer.favoritesList)
   const isTokenFavorited = favoritesList.includes(token.name)
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('3d')
@@ -45,13 +46,13 @@ const Analysis = () => {
     analyzedToken: token,
     timeLastUpdated: token.last_updated,
     timeFilter: timeFilter
-  }, [timeFilter])
+  })
 
   useIntervalFetch({
     URL: CURRENCY_API_URL,
     interval: 60000,
     checkpoint: 360000,
-    action: setCurrenciesData,
+    action: setCoinData,
     fetchID: "crypto"
   })
 
@@ -62,7 +63,7 @@ const Analysis = () => {
   return (
     <section className='analysis'>
       <div className="analyzedCurrency">
-        <div className='leftSection'>
+        <div className={`leftSection${isDarkTheme ? ' darkLeftSection' : ''}`}>
           <img src={token.image} alt="currencyImage" width={32}/>
           <div>
             <span className='fullName'>{token.name}</span>
@@ -83,8 +84,8 @@ const Analysis = () => {
           </button>
         </div>
       </div>
-      <div className="graph">
-        <div className="heading">
+      <div className={`graph${isDarkTheme ? ' darkGraph' : ''}`}>
+        <div className={`heading${isDarkTheme ? ' darkHeading' : ''}`}>
           <div className='currentPrice'>
             <span className='currentPrice'>${countedPrice?.toLocaleString()} USD </span>
             <span 
@@ -118,7 +119,7 @@ const Analysis = () => {
         <LineChart 
           plotData={currentPlotData as Coordinate[]} 
           plotName={`${token.id}_linechart`}
-          color={token.price_change_percentage_24h >= 0 ? "#abc71f" : '#b00000'}
+          color={token.price_change_percentage_24h >= 0 ? "#4fc71f" : '#b00000'}
           yLabel='Price (USD)'
           timeFilter={timeFilter}
         />
