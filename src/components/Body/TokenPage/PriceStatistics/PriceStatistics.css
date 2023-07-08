@@ -1,12 +1,10 @@
 .priceStatistics{
   background-color: white;
   padding: 25px;
-  /* box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.058); */
   margin-top: 72px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .darkPriceStatistics{
   background-color: #161616;
@@ -40,4 +38,17 @@
 
 .priceStatistics .highLow .title{
   font-size: medium;
+}
+
+@media (width < 1300px) {
+  .priceStatistics{
+    margin-top: 0;
+    flex: 1;
+  }
+}
+
+@media (width < 555px) {
+  .priceStatistics .title{
+    text-align: center;
+  }
 }

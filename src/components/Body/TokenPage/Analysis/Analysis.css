@@ -14,7 +14,6 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .darkLeftSection{
   color: white;
@@ -44,7 +43,6 @@
   font-size: medium;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .analysis .analyzedCurrency .addToFavorites:hover{
   color: rgb(175, 133, 26);
@@ -53,12 +51,10 @@
 .analysis .graph{
   background-color: white;
   padding: 25px;
-  /* box-shadow: 0px 5px 3px 3px rgba(0, 0, 0, 0.058); */
   display: flex;
   flex-direction: column;
   font-weight: 500;
   gap: 2rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .analysis .darkGraph{
@@ -69,12 +65,10 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .darkHeading{
   color: white;
 }
-
 
 .analysis .graph .currentPrice{
   font-size: xx-large;
@@ -83,7 +77,6 @@
 
 .analysis .graph .currentPrice .priceChange{
   font-size: x-large;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .analysis .graph .options{
@@ -94,4 +87,16 @@
 .analysis .graph .options .timeFilters{
   display: flex;
   gap: 1rem;
+}
+
+@media (width < 1300px) {
+  .analysis{
+    max-width: none;
+  }
+}
+
+@media (width < 800px) {
+  .analysis .analyzedCurrency{
+    padding: 0px 20px;
+  }
 }

@@ -5,8 +5,8 @@
   box-sizing: border-box;
   background-color: white;
   z-index: 12;
-  padding: 20px 40px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px 20px;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   border-bottom-style: solid;
   border-bottom-color: #EFEFEF;
@@ -78,7 +78,6 @@
   align-items: center;
   background-color: transparent;
   border: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 
@@ -98,7 +97,6 @@
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .headerContainer .searchField .submitEntry:hover,
 .headerContainer .searchField .submitEntry:focus {
@@ -126,7 +124,6 @@
   align-items: center;
   flex: 1;
   border-radius: 10px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .header .mobileSearchContainer .searchField .searchBar,
 .header .mobileSearchContainer .searchField .submitEntry{

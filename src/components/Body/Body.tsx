@@ -6,8 +6,8 @@ import "./Body.css"
 const Body = () => {
   return (
     <main className="body">
-      <HomePage/>
-      {/* <TokenPage/> */}
+      {/* <HomePage/> */}
+      <TokenPage/>
     </main>
   )
 }

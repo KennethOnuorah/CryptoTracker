@@ -8,7 +8,6 @@
   flex-direction: column;
   gap: 0.5rem;
   font-size: large;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .dark-tracked-item{
   color: white;
@@ -21,4 +20,16 @@
 
 .otherTrackings .tracked-item .title hr{
   border: 0.5px solid rgb(193, 193, 193);
+}
+
+@media (width < 500px) {
+  .otherTrackings{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1rem;
+    justify-content: space-evenly;
+  }
+  .otherTrackings .tracked-item{
+    text-align: center;
+  }
 }

@@ -6,7 +6,6 @@
   font-weight: 500;
   margin-top: 20px;
   margin-bottom: 20px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .recommended .recommendations{
@@ -16,7 +15,6 @@
   color: black;
   background-color: white;
   padding: 25px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .recommended .recommendations .recommendation{
@@ -26,11 +24,8 @@
   gap: 1rem;
   padding: 10px;
   width: auto;
-  background-color: transparent;
-  border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .recommendation .left{
@@ -55,4 +50,30 @@
   display: flex;
   justify-content: space-between;
   font-size: medium;
+}
+
+@media (width < 770px) {
+  .recommended .recommendations{
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (width < 800px) {
+  .recommended .heading{
+    padding: 0px 20px;
+  }
+}
+
+@media (width < 555px) {
+  .recommended .recommendations{
+    grid-template-columns: auto;
+  }
+  .recommended .heading{
+    justify-content: center;
+    margin-top: 0;
+  }
+  .recommended .recommendations .recommendation .left .title{
+    display: flex;
+    justify-content: space-between;
+  }
 }

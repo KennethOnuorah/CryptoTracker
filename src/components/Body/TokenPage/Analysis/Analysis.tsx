@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux'
 import useLineChart from '../../../../hooks/useLineChart'
 import useIntervalFetch from '../../../../hooks/useIntervalFetch'
+import useViewportDimensions from '../../../../hooks/useViewportDimensions'
 import { useCountUp } from 'use-count-up'
 
 import { setCoinData } from '../../../../../redux/slices/currencies'
@@ -9,13 +10,13 @@ import { setFavoritesList } from '../../../../../redux/slices/favorites'
 import { setCoordinates } from '../../../../../redux/slices/lineChart'
 
 import LineChart from './LineChart/LineChart'
-import LineChartTimeFilter from './LineChartTimeFilter/LineChartTimeFilter'
+import IndividualTimeFilter from './LineChart/IndividualTimeFilter/IndividualTimeFilter'
+import ToggleTimeFilter from './LineChart/ToggleTimeFilter/ToggleTimeFilter'
 import OtherTrackings from './OtherTrackings/OtherTrackings'
 import Recommended from './Recommended/Recommended'
 
-import { Coordinate, TimeFilter } from '../../../../helpers/types'
+import { TimeFilter } from '../../../../helpers/types'
 import { CURRENCY_API_URL } from '../../../../helpers/links'
-import { entry7dSparklineOptions } from '../../../../helpers/apexOptions'
 import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 'react-icons/hi'
 
 import './Analysis.css'
@@ -60,6 +61,8 @@ const Analysis = () => {
     fetchID: "crypto"
   })
 
+  const {width,} = useViewportDimensions()
+
   useEffect(() => {
     resetCountedPrice()
   }, [previousCountedPrice.current])
@@ -83,8 +86,8 @@ const Analysis = () => {
                 dispatch(setFavoritesList([...favoritesList, token.name]))
             }}
           >
-            {isTokenFavorited ? <HeartFilledIcon size={20}/> : <HeartEmptyIcon size={20}/>}
-            {isTokenFavorited ? 'Remove from Favorites' : "Add to Favorites"}
+            {isTokenFavorited ? <HeartFilledIcon size={width >= 500 ? 20 : 32}/> : <HeartEmptyIcon size={width >= 500 ? 20 : 32}/>}
+            {width >= 500 && (isTokenFavorited ? 'Remove from Favorites' : "Add to Favorites")}
           </button>
         </div>
       </div>
@@ -105,23 +108,28 @@ const Analysis = () => {
           <div className='options'>
             {token.name} Price Chart (USD) ({timeFilter === '1d' ? '24H' : timeFilter.toUpperCase()})
             <div className="timeFilters" role='group'>
-              <LineChartTimeFilter timeFilter='1d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
-                24H
-              </LineChartTimeFilter>
-              <LineChartTimeFilter timeFilter='3d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
-                3D
-              </LineChartTimeFilter>
-              <LineChartTimeFilter timeFilter='5d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
-                5D
-              </LineChartTimeFilter>
-              <LineChartTimeFilter timeFilter='7d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
-                7D
-              </LineChartTimeFilter>
+              {width >= 515 ? 
+                <>
+                  <IndividualTimeFilter timeFilter='1d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                    24H
+                  </IndividualTimeFilter>
+                  <IndividualTimeFilter timeFilter='3d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                    3D
+                  </IndividualTimeFilter>
+                  <IndividualTimeFilter timeFilter='5d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                    5D
+                  </IndividualTimeFilter>
+                  <IndividualTimeFilter timeFilter='7d' currentTimeFilter={timeFilter} dispatch={setTimeFilter}>
+                    7D
+                  </IndividualTimeFilter>
+                </> :
+                <ToggleTimeFilter dispatch={setTimeFilter}/>
+              }
             </div>
           </div>
         </div>
         <LineChart 
-          plotData={currentPlotData as Coordinate[]} 
+          plotData={currentPlotData} 
           plotName={`${token.id}_linechart`}
           color={token.price_change_percentage_7d_in_currency as number >= 0 ? "#4fc71f" : '#b00000'}
           yLabel='Price (USD)'
@@ -131,9 +139,7 @@ const Analysis = () => {
           data={token}
         />
       </div>
-      <Recommended 
-        analyzedTokenName={token.name}
-      />
+      {width >= 1300 && <Recommended analyzedTokenName={token.name}/>}
     </section>
   )
 }
