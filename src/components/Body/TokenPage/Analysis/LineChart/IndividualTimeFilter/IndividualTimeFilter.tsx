@@ -1,14 +1,14 @@
-import { TimeFilter } from '../../../../../helpers/types'
-import './LineChartTimeFilter.css'
+import { TimeFilter } from '../../../../../../helpers/types'
+import './IndividualTimeFilter.css'
 
-interface LineChartTimeFilterProps{
+interface IndividualTimeFilterProps{
   timeFilter: TimeFilter
   currentTimeFilter: TimeFilter
   dispatch: React.Dispatch<React.SetStateAction<TimeFilter>>
   children: React.ReactNode
 }
 
-const LineChartTimeFilter = ({ currentTimeFilter, timeFilter, dispatch, children } : LineChartTimeFilterProps) => {
+const IndividualTimeFilter = ({ currentTimeFilter, timeFilter, dispatch, children } : IndividualTimeFilterProps) => {
   return (
     <button
       className='timeFilter'
@@ -22,4 +22,4 @@ const LineChartTimeFilter = ({ currentTimeFilter, timeFilter, dispatch, children
   )
 }
 
-export default LineChartTimeFilter
+export default IndividualTimeFilter

@@ -1,11 +1,13 @@
 import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 
+import { useAppSelector } from '../../../../../hooks/redux'
+import useViewportDimensions from '../../../../../hooks/useViewportDimensions'
+
 import { abbreviateNumber } from '../../../../../utils/abbreviateNumber'
 import { Coordinate, TimeFilter } from '../../../../../helpers/types'
 
 import './LineChart.css'
-import { useAppSelector } from '../../../../../hooks/redux'
 
 interface LineChartProps{
   plotData: Coordinate[]
@@ -22,6 +24,7 @@ interface LineChartProps{
 
 const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, customOptions } : LineChartProps) => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+  const {width,} = useViewportDimensions()
 
   const defaultOptions: ApexOptions = {
     chart: {
@@ -63,6 +66,7 @@ const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, custom
     xaxis: {
       type: 'category',
       labels: {
+        show: width >= 750, 
         rotate: 0,
         formatter(value){
           return timeFilter === '1d' ? value?.split(', ')[1] : value
@@ -94,6 +98,7 @@ const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, custom
       },
     },
     yaxis: {
+      show: width >= 500,
       labels: {
         formatter(value) {
           return "$" + abbreviateNumber(value, 2)

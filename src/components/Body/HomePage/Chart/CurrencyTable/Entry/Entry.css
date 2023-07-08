@@ -1,7 +1,6 @@
 .tableEntry{
   border-top: 1.5px solid #ececec;
   color: black;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
 }
 .darkTableEntry{
@@ -18,7 +17,6 @@
   border-left: none;
   border-right: none;
   font-weight: 500;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tableEntry .price{
@@ -63,7 +61,6 @@
   border: none;
   outline: none;
   background-color: transparent;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tableEntry .favoriteBtn:hover,
