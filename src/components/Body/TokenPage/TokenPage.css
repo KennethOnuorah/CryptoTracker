@@ -50,3 +50,10 @@
 .darkButton{
   color: white;
 }
+
+@media (width <= 1200px) {
+  .tokenPage .analytics{
+    display: flex;
+    flex-direction: column;
+  }
+}

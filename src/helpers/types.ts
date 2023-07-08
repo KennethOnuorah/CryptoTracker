@@ -44,11 +44,11 @@ export interface CoinData {
   }
   price_change_percentage_7d_in_currency?: number
 }
-export type CoinDataSortType = 'market_cap_rank' | 'name' | 'current_price' | 'price_change_percentage_24h' | 'market_cap'
+export type OrderBy = 'market_cap_rank' | 'name' | 'current_price' | 'price_change_percentage_24h' | 'market_cap'
 export interface FieldProperties {
   name: string
   styledName: string | JSX.Element
-  sortType: CoinDataSortType
+  orderBy: OrderBy
 }
 
 //NEWS

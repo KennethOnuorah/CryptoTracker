@@ -2,6 +2,7 @@
   border-top: 1.5px solid #ececec;
   color: black;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 .darkTableEntry{
   border-top: 1.5px solid #2e2e2e;
@@ -13,11 +14,10 @@
 }
 
 .tableEntry th{
-  padding: 20px;
+  padding: 16px;
   border-left: none;
   border-right: none;
   font-weight: 500;
-  cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -48,6 +48,14 @@
   color: rgb(105, 105, 105);
 }
 
+.tableEntry .sparkline7d{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 25px;
+  padding-top: 35px;
+}
+
 .tableEntry .favoriteBtn{
   display: flex;
   align-items: center;
@@ -64,9 +72,29 @@
   animation: shakeAnimation 1.25s infinite 0.2s;
 }
 
-@media screen and (max-width: 590px) {
+@media (width < 820px) {
+  .tableEntry th:nth-last-child(2){
+    display: none;
+  }
+  
+  .tableEntry .name{
+    text-align: left;
+  }
+}
+
+@media (width < 590px) {
   .tableEntry th:nth-child(1),
   .tableEntry th:nth-last-child(2){
+    display: none;
+  }
+  
+  .tableEntry .name{
+    text-align: left;
+  }
+}
+
+@media (width < 445px) {
+  .tableEntry th:nth-last-child(3){
     display: none;
   }
   
