@@ -1,18 +1,21 @@
 import { useState, useRef, useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../../../../hooks/redux'
-import useUpdatePlotData from '../../../../hooks/useUpdatePlotData'
+import useLineChart from '../../../../hooks/useLineChart'
 import useIntervalFetch from '../../../../hooks/useIntervalFetch'
 import { useCountUp } from 'use-count-up'
 
 import { setCoinData } from '../../../../../redux/slices/currencies'
 import { setFavoritesList } from '../../../../../redux/slices/favorites'
+import { setCoordinates } from '../../../../../redux/slices/lineChart'
 
 import LineChart from './LineChart/LineChart'
 import LineChartTimeFilter from './LineChartTimeFilter/LineChartTimeFilter'
 import OtherTrackings from './OtherTrackings/OtherTrackings'
+import Recommended from './Recommended/Recommended'
 
 import { Coordinate, TimeFilter } from '../../../../helpers/types'
 import { CURRENCY_API_URL } from '../../../../helpers/links'
+import { entry7dSparklineOptions } from '../../../../helpers/apexOptions'
 import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 'react-icons/hi'
 
 import './Analysis.css'
@@ -41,8 +44,9 @@ const Analysis = () => {
     },
   })
 
-  const currentPlotData = useUpdatePlotData({
+  const currentPlotData = useLineChart({
     prices: token.sparkline_in_7d?.price as number[], 
+    action: setCoordinates,
     analyzedToken: token,
     timeLastUpdated: token.last_updated,
     timeFilter: timeFilter
@@ -119,7 +123,7 @@ const Analysis = () => {
         <LineChart 
           plotData={currentPlotData as Coordinate[]} 
           plotName={`${token.id}_linechart`}
-          color={token.price_change_percentage_24h >= 0 ? "#4fc71f" : '#b00000'}
+          color={token.price_change_percentage_7d_in_currency as number >= 0 ? "#4fc71f" : '#b00000'}
           yLabel='Price (USD)'
           timeFilter={timeFilter}
         />
@@ -127,6 +131,9 @@ const Analysis = () => {
           data={token}
         />
       </div>
+      <Recommended 
+        analyzedTokenName={token.name}
+      />
     </section>
   )
 }

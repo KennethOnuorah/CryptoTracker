@@ -9,18 +9,23 @@ import { useAppSelector } from '../../../../../hooks/redux'
 
 interface LineChartProps{
   plotData: Coordinate[]
-  plotName: string
+  plotName?: string
+  size?: {
+    width: number | string
+    height: number | string
+  }
   color: string | undefined
   yLabel: string
   timeFilter: TimeFilter
+  customOptions?: ApexOptions
 }
 
-const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChartProps) => {
+const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, customOptions } : LineChartProps) => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
 
-  const options: ApexOptions = {
+  const defaultOptions: ApexOptions = {
     chart: {
-      id: plotName,
+      id: plotName ? plotName : '',
       toolbar: {
         show: true,
       },
@@ -109,7 +114,9 @@ const LineChart = ({ plotData, plotName, color, yLabel, timeFilter } : LineChart
 
   return (
     <Chart
-      options={options}
+      width={size ? size.width : '100%'}
+      height={size ? size.height : 'auto'}
+      options={customOptions ? {...defaultOptions, ...customOptions} : defaultOptions}
       series={series}
       type='area'
     />

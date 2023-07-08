@@ -43,32 +43,37 @@ const Chart = ({ title, subtitle, icon, data } : ChartProps) => {
           {
             name: '#',
             styledName: '#',
-            sortType: 'market_cap_rank'
+            orderBy: 'market_cap_rank'
           },
           {
             name: 'name',
             styledName: 'Name',
-            sortType: 'name',
+            orderBy: 'name',
           },
           {
             name: 'price',
             styledName: 'Price',
-            sortType: 'current_price'
+            orderBy: 'current_price'
           },
           {
             name: 'dayChange',
             styledName: <ChangeIcon size={20} style={{flexShrink: 0, transform: 'translateY(3px)'}}/>,
-            sortType: 'price_change_percentage_24h',
+            orderBy: 'price_change_percentage_24h',
           },
           {
             name: 'marketCap',
             styledName: 'Market Cap',
-            sortType: 'market_cap',
+            orderBy: 'market_cap',
+          },
+          {
+            name: 'sparkline_in_7d',
+            styledName: '7d Sparkline',
+            orderBy: 'sparkline_in_7d'
           },
           {
             name: '',
             styledName: '',
-            sortType: 'market_cap_rank',
+            orderBy: 'market_cap_rank',
           },
         ]}
         data={data}

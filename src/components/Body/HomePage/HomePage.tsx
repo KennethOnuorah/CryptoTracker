@@ -42,16 +42,17 @@ const HomePage = () => {
 
   return (
     <section className="homepage">
-      <Chart 
-        title="Popular Tokens" 
-        subtitle="The top 10 most popular tokens"
-        icon={<TrendIcon color={"red"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
-        data={popularCurrencies}
-      />
       <Chart
         title="Favorites"
-        icon={<FavoriteIcon color={"red"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
+        subtitle="View your favorites in real time"
+        icon={<FavoriteIcon color={"orange"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={favoriteCurrencies}
+      />
+      <Chart 
+        title="Popular Tokens" 
+        subtitle="Today's most popular tokens"
+        icon={<TrendIcon color={"orange"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
+        data={popularCurrencies}
       />
       <News
         title="Daily News"
