@@ -23,7 +23,7 @@
 @media (width < 1300px) {
   .conversions{
     flex: 1;
-    height: max-content;
+    height: auto;
   }
 }
 

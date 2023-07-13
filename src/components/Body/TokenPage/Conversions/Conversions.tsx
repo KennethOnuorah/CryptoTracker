@@ -8,9 +8,13 @@ import { EXCHANGE_API_URL } from '../../../../helpers/links'
 
 import './Conversions.css'
 
-const Conversions = () => {
-  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+interface ConversionsProps{
+  tokenSymbol: string
+}
 
+const Conversions = ({ tokenSymbol } : ConversionsProps) => {
+  const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
+  
   useIntervalFetch({
     URL: EXCHANGE_API_URL,
     interval: 60000,
@@ -26,31 +30,31 @@ const Conversions = () => {
       </div>
       <div className="inputConversions">
         <Conversion
-          tokenSymbol='BTC'
+          tokenSymbol={tokenSymbol}
           targetCurrency='USD'
           targetCurrencySymbol='$'
           flagImageSrc='/images/us_flag.png'
         />
         <Conversion
-          tokenSymbol='BTC'
+          tokenSymbol={tokenSymbol}
           targetCurrency='CAD'
           targetCurrencySymbol='$'
           flagImageSrc='/images/canada_flag.png'
         />
         <Conversion
-          tokenSymbol='BTC'
+          tokenSymbol={tokenSymbol}
           targetCurrency='GBP'
           targetCurrencySymbol='£'
           flagImageSrc='/images/uk_flag.png'
         />
         <Conversion
-          tokenSymbol='BTC'
+          tokenSymbol={tokenSymbol}
           targetCurrency='EUR'
           targetCurrencySymbol='€'
           flagImageSrc='/images/eu_flag.png'
         />
         <Conversion
-          tokenSymbol='BTC'
+          tokenSymbol={tokenSymbol}
           targetCurrency='BRL'
           targetCurrencySymbol='R$'
           flagImageSrc='/images/brazil_flag.png'

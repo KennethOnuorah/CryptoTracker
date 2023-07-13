@@ -1,6 +1,7 @@
 import Chart from "./Chart/Chart"
 import News from "./News/News"
 
+import { useEffect } from 'react'
 import { useAppSelector } from "../../../hooks/redux"
 import useIntervalFetch from "../../../hooks/useIntervalFetch"
 
@@ -40,16 +41,21 @@ const HomePage = () => {
     fetchID: "news"
   })
 
+  useEffect(() => {
+    document.title = 'CryptoTracker'
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <section className="homepage">
       <Chart
         title="Favorites"
-        subtitle="View your favorites in real time"
+        subtitle="View your favorite currencies in real time"
         icon={<FavoriteIcon color={"orange"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={favoriteCurrencies}
       />
       <Chart 
-        title="Popular Tokens" 
+        title="Most Popular" 
         subtitle="Today's most popular tokens"
         icon={<TrendIcon color={"orange"} style={{flexShrink: 0, transform: "translateY(3px)"}}/>}
         data={popularCurrencies}

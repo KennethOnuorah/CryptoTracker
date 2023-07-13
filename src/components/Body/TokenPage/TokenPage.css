@@ -46,6 +46,13 @@
   gap: 1.5rem;
 }
 
+.tokenPage .apology, .tokenPage .persuasion{
+  font-size: xx-large;
+}
+.tokenPage .notFoundImage{
+  filter: drop-shadow(0px 0px 25px goldenrod);
+}
+
 .darkButton{
   color: white;
 }
@@ -66,6 +73,9 @@
   .tokenPage .analytics .right{
     flex-direction: column;
   }
+  /* .tokenPage .notFoundImage{
+    max-width: 60%;
+  } */
 }
 
 @media (width < 800px) {
