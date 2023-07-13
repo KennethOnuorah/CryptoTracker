@@ -37,6 +37,7 @@ API's used:
 - [x] Token analysis page, featuring...
   * Current prices
   * A line chart displaying current price over time w/ time scope filters 
+  * Other relevant information
   * Currency conversion calculators
   * Recommendations
 
