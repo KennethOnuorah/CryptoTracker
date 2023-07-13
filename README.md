@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/readme/readme_app_logo.svg" width="352" height="399">
+  <img src="public/readme/readme_app_logo.svg" width="332" height="379">
 </p>
 
 <p align="center">
@@ -29,6 +29,7 @@ API's used:
 1. [News API](https://newsapi.org/)
 2. [Currency Exchange Rate API](https://www.exchangerate-api.com/)
 
+
 ## **Features** 📦️
 - [x] Realtime cryptocurrency prices & other informaton (updates every 5-6 minutes)
 - [x] Ability to add tokens to a favorites list
@@ -40,6 +41,25 @@ API's used:
   * Other relevant information
   * Currency conversion calculators
   * Recommendations
+
+## **How to Setup 🛠️**
+Clone this repository
+
+```bash
+git clone https://github.com/KennethOnuorah/CryptoTracker.git
+cd CryptoTracker
+```
+
+Install dependencies
+```bash
+npm i
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
 
 ## **Screenshot** 📷
 | Tablet | Mobile |
