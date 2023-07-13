@@ -21,17 +21,18 @@ import { HiOutlineHeart as HeartEmptyIcon, HiHeart as HeartFilledIcon } from 're
 
 import './Analysis.css'
 
-const Analysis = () => {
-  //Example
+interface AnalysisProps{
+  name: string
+}
+
+const Analysis = ({ name } : AnalysisProps) => {
   const dispatch = useAppDispatch()
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
-  const token = useAppSelector(state => state.currenciesReducer.coinData)[0]
+  const token = useAppSelector(state => state.currenciesReducer.coinData).filter(coin => coin.name === name)[0]
   const favoritesList = useAppSelector(state => state.favoritesReducer.favoritesList)
   const isTokenFavorited = favoritesList.includes(token.name)
   const [timeFilter, setTimeFilter] = useState<TimeFilter>('3d')
   const previousCountedPrice = useRef(0)
-
-  document.title = `CryptoTracker • ${token.name}`
 
   const { value: countedPrice, reset: resetCountedPrice } = useCountUp({
     isCounting: true,
@@ -71,7 +72,7 @@ const Analysis = () => {
     <section className='analysis'>
       <div className="analyzedCurrency">
         <div className={`leftSection${isDarkTheme ? ' darkLeftSection' : ''}`}>
-          <img src={token.image} alt="currencyImage" width={32}/>
+          <img src={token.image} alt={`${token.name} logo`} width={32}/>
           <div>
             <span className='fullName'>{token.name}</span>
             <span className='symbol'> {token.symbol.toUpperCase()}</span>
@@ -131,7 +132,7 @@ const Analysis = () => {
         <LineChart 
           plotData={currentPlotData} 
           plotName={`${token.id}_linechart`}
-          color={token.price_change_percentage_7d_in_currency as number >= 0 ? "#4fc71f" : '#b00000'}
+          color={token.price_change_percentage_24h as number >= 0 ? "#4fc71f" : '#b00000'}
           yLabel='Price (USD)'
           timeFilter={timeFilter}
         />

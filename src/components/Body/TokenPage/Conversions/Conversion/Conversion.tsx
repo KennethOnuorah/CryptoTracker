@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useAppSelector } from '../../../../../hooks/redux'
 
 import { TbArrowsExchange as ExchangeIcon } from 'react-icons/tb'
@@ -17,13 +17,19 @@ const Conversion = ({ tokenSymbol, targetCurrency, targetCurrencySymbol, flagIma
   const currentTokenPrice = useAppSelector(state => state.currenciesReducer.coinData).filter(token => token.symbol.toUpperCase() === tokenSymbol)[0].current_price
   
   const fromValue = useRef<HTMLInputElement>(null)
-  const [fromValueEdited, setFromValueEdited] = useState(false)
+  const [isFromValueEdited, setIsFromValueEdited] = useState(false)
   const toValue = useRef<HTMLInputElement>(null)
 
   const localeOptions: Intl.NumberFormatOptions = {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }
+
+  useEffect(() => {
+    if(!fromValue.current || !toValue.current) return
+    fromValue.current.value = `1 ${tokenSymbol}`
+    toValue.current.value = `${targetCurrencySymbol}${(targetCurrencyInitialValue * currentTokenPrice).toLocaleString(undefined, localeOptions)}`
+  }, [tokenSymbol])
 
   return (
     <div className="conversion">
@@ -58,7 +64,7 @@ const Conversion = ({ tokenSymbol, targetCurrency, targetCurrencySymbol, flagIma
           defaultValue={`${targetCurrencySymbol}${(targetCurrencyInitialValue * currentTokenPrice).toLocaleString(undefined, localeOptions)}`} 
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0')
-            setFromValueEdited(true)
+            setIsFromValueEdited(true)
           }}
           onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
             e.target.value = e.target.value.replaceAll(',', '').replace(targetCurrencySymbol, '')
@@ -68,9 +74,9 @@ const Conversion = ({ tokenSymbol, targetCurrency, targetCurrencySymbol, flagIma
             const newValue = parseFloat(e.target.value)
             e.target.value = `${targetCurrencySymbol}${parseFloat(e.target.value).toLocaleString(undefined, localeOptions)}`
             if(fromValue.current) {
-              if(!fromValueEdited) return
+              if(!isFromValueEdited) return
               fromValue.current.value = `${newValue / (targetCurrencyInitialValue * currentTokenPrice)} ${tokenSymbol}`
-              setFromValueEdited(false)
+              setIsFromValueEdited(false)
             }
           }}
         />

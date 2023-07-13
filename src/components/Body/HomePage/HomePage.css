@@ -5,6 +5,38 @@
   padding: 20px 40px;
 }
 
+dialog::backdrop{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: aqua;
+}
+.homepage .errorModal{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  border: none;
+  gap: 1rem;
+  box-shadow: 0px 5px 20px 10px rgba(0, 0, 0, 0.158);
+}
+
+.homepage .errorModal img{
+  filter: drop-shadow(0px 0px 25px goldenrod);
+  user-select: none;
+}
+
+.homepage .errorModal .errorMessage{
+  font-size: xx-large;
+  font-weight: 500;
+}
+
 @media screen and (max-width: 655px) {
   .homepage {
     justify-content: center;

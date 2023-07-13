@@ -44,7 +44,7 @@
   gap: 1rem;
 }
 
-.toggleColorTheme{
+.toggleColorTheme, .toggleColorTheme:not(:hover){
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,8 +58,7 @@
   transition: all 0.2s ease-in-out;
 }
 .toggleColorTheme:hover,
-.toggleColorTheme:focus
-{
+.toggleColorTheme:focus{
   filter: contrast(0.5);
 }
 .darkToggleColorTheme{
@@ -91,7 +90,8 @@
   background-color: #f0f0f0;
   color: black;
 }
-.headerContainer .searchField .submitEntry {
+.headerContainer .searchField .submitEntry, 
+.headerContainer .searchField .submitEntry:not(:hover) {
   display: flex;
   padding: 5px 10px 5px 15px;
   border-top-left-radius: 10px;
@@ -149,4 +149,50 @@
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   flex-grow: 2;
+}
+
+.shake-animation-trigger {
+  animation: shake 1s forwards;
+}
+.flash-red-animation-trigger {
+  animation: flashRed 1s forwards;
+}
+
+@keyframes shake {
+  0%{
+    transform: rotateZ(0deg);
+  }
+  10%{
+    transform: rotateZ(-2deg);
+  }
+  20%{
+    transform: rotateZ(3deg);
+  }
+  30%{
+    transform: rotateZ(-4deg);
+  }
+  40%{
+    transform: rotateZ(4deg);
+  }
+  50%{
+    transform: rotateZ(-2deg);
+  }
+  60%{
+    transform: rotateZ(1deg);
+  }
+  70%{
+    transform: rotateZ(0deg);
+  }
+  100%{
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes flashRed {
+  0%{
+    background-color: rgb(225, 157, 157);
+  }
+  100%{
+    background-color: #f0f0f0;
+  }
 }

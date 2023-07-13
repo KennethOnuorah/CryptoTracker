@@ -1,6 +1,7 @@
 import Chart from 'react-apexcharts'
 import { ApexOptions } from 'apexcharts'
 
+import { useState } from 'react'
 import { useAppSelector } from '../../../../../hooks/redux'
 import useViewportDimensions from '../../../../../hooks/useViewportDimensions'
 
@@ -32,6 +33,7 @@ const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, custom
       toolbar: {
         show: true,
       },
+      offsetX: width >= 500 ? 0 : -17
     },
     colors: [color],
     dataLabels: {
@@ -66,10 +68,12 @@ const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, custom
     xaxis: {
       type: 'category',
       labels: {
-        show: width >= 750, 
         rotate: 0,
         formatter(value){
-          return timeFilter === '1d' ? value?.split(', ')[1] : value
+          return width >= 750 ? 
+            timeFilter === '1d' ? value?.split(', ')[1] : value : 
+            timeFilter === '1d' ? 
+              value.toString().split(', ')[1] : value.toString().split(', ')[0]
         },
         showDuplicates: false,
         hideOverlappingLabels: true,
@@ -84,7 +88,7 @@ const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, custom
         }
       },
       categories: plotData.map(coord => coord.x),
-      tickAmount: parseInt(timeFilter.slice(0, 1)),
+      tickAmount: width >= 750 ? parseInt(timeFilter.slice(0, 1)) : 2,
       tickPlacement: 'between',
       axisTicks: {
         borderType: 'solid',
@@ -98,7 +102,6 @@ const LineChart = ({ plotData, plotName, size, color, yLabel, timeFilter, custom
       },
     },
     yaxis: {
-      show: width >= 500,
       labels: {
         formatter(value) {
           return "$" + abbreviateNumber(value, 2)

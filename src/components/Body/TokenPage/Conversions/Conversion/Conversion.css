@@ -34,5 +34,6 @@
   .conversion .exchange .exchangeInput{
     max-width: none;
     width: 50%;
+    height: 43px;
   }
 }

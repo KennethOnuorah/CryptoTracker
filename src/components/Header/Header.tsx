@@ -1,47 +1,111 @@
-import { useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import useViewportDimensions from '../../hooks/useViewportDimensions'
+import { validateQuery } from '../../utils/validateQuery'
 
+import { Link } from 'react-router-dom'
 import { toggleDarkTheme } from '../../../redux/slices/colorTheme'
 
 import { CgClose as CloseHeader } from 'react-icons/cg' 
 import { RxMagnifyingGlass as Search } from 'react-icons/rx'
-import { 
-  HiOutlineSun as LightIcon, 
-  HiOutlineMoon as DarkIcon,
-  HiOutlineMenu as OpenHeader 
-} from 'react-icons/hi'
+import { HiOutlineSun as LightIcon, HiOutlineMoon as DarkIcon, HiOutlineMenu as OpenHeader } from 'react-icons/hi'
 
 import "./Header.css"
 
 const Header = () => {
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
-  const dispatch = useAppDispatch()
-  const dimensions = useViewportDimensions()
-  const [isHeaderExpanded, setIsHeaderExpanded] = useState(false)
+  const coinNameList = useAppSelector(state => state.currenciesReducer.coinData).map(coin => coin.name)
 
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const {width,} = useViewportDimensions()
+  const [isHeaderExpanded, setIsHeaderExpanded] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const searchFieldRef = useRef<HTMLDivElement>(null)
+  const searchBarRef = useRef<HTMLInputElement>(null)
+  
   useEffect(() => {
-    if(dimensions.width <= 660) return
+    if(width <= 660) return
     setIsHeaderExpanded(false)
-  }, [dimensions.width])
+  }, [width])
   
   const searchSection = (
     <>  
       <button 
         className={`toggleColorTheme${isDarkTheme ? ' darkToggleColorTheme' : ''}`}
+        name='toggle-color-theme'
         onClick={() => dispatch(toggleDarkTheme())}
       >
         {isDarkTheme ? <LightIcon size={25} color={'black'}/> : <DarkIcon size={25} color={'black'}/>}
       </button>
-      <div className={`searchField${isDarkTheme ? ' darkSearch' : ''}`}>
-        <button className='submitEntry' type="submit">
+      <div 
+        className={`searchField${isDarkTheme ? ' darkSearch' : ''}`} 
+        ref={searchFieldRef}
+        onAnimationEnd={() => {
+          searchFieldRef.current?.classList.remove('shake-animation-trigger')
+        }}
+      >
+        <button 
+          className='submitEntry' 
+          type="submit"
+          onClick={() => {
+            if(searchQuery === '') return
+            validateQuery(searchQuery, coinNameList)
+              .then(result => {
+                console.log('You may proceed to', result)
+                setIsHeaderExpanded(false)
+                navigate(`/${result}`)
+              })
+              .catch(() => {
+                searchFieldRef.current?.classList.add('shake-animation-trigger')
+                searchBarRef.current?.classList.add('flash-red-animation-trigger')
+                console.error('Invalid search. No results found!')
+              })
+              .finally(() => {
+                if(!searchBarRef.current) return
+                searchBarRef.current.value = ''
+                searchBarRef.current.blur()
+                setSearchQuery('')
+              })
+          }}
+        >
           <Search size={20} color={"black"}/>
         </button>
         <input  
           type="search" 
-          name="searchBar" 
+          name="searchBar"
+          ref={searchBarRef}
           className={`searchBar${isDarkTheme ? ' darkSearch' : ''}`}
           placeholder="Search"
+          onAnimationEnd={() => {
+            searchBarRef.current?.classList.remove('flash-red-animation-trigger')
+          }}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if(e.key === 'Enter' && searchQuery !== ''){
+              validateQuery(searchQuery, coinNameList)
+                .then(result => {
+                  console.log('You may proceed to', result)
+                  setIsHeaderExpanded(false)
+                  navigate(`/${result}`)
+                })
+                .catch(() => {
+                  searchFieldRef.current?.classList.add('shake-animation-trigger')
+                  searchBarRef.current?.classList.add('flash-red-animation-trigger')
+                  console.error('Invalid search. No results found!')
+                })
+                .finally(() => {
+                  if(!searchBarRef.current) return
+                  searchBarRef.current.value = ''
+                  searchBarRef.current.blur()
+                  setSearchQuery('')
+                })
+            }
+          }}
         />
       </div>
     </>
@@ -51,18 +115,18 @@ const Header = () => {
     <header 
       className={`header${isDarkTheme ? ' darkHeader' : ''}`}
       style={{
-        height: dimensions.width <= 660 ? isHeaderExpanded ? '128px' : '68px' : 'auto'
+        height: width <= 660 ? isHeaderExpanded ? '128px' : '68px' : 'auto'
       }}
     >
       <div className="headerContainer">
-        <a href="http://github.com/KennethOnuorah/CryptoTracker" target="_blank" rel="noopener noreferrer">
+        <Link to="/">
           <div className="appName">
             <img src="/images/app_logo.svg" alt="app_logo" width={24} style={{transform: 'translateY(2px)'}}/>
             CryptoTra¢ker
           </div>
-        </a>
+        </Link>
         <div className='left'>
-          {dimensions.width >= 660 ? 
+          {width >= 660 ? 
             searchSection :
             <button 
               className='expandHeaderBtn'
@@ -76,7 +140,7 @@ const Header = () => {
           }
         </div>
       </div>
-      {dimensions.width <= 660 && 
+      {width <= 660 && 
         <div className='mobileSearchContainer'>
           {searchSection}
         </div>

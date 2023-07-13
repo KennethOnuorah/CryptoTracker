@@ -3,6 +3,7 @@ import { useCountUp } from 'use-count-up'
 import { useAppSelector, useAppDispatch } from '../../../../../../hooks/redux'
 import useLineChart from '../../../../../../hooks/useLineChart'
 
+import { Link, useNavigate } from 'react-router-dom'
 import LineChart from '../../../../TokenPage/Analysis/LineChart/LineChart'
 
 import { setFavoritesList } from '../../../../../../../redux/slices/favorites'
@@ -34,6 +35,8 @@ const Entry = ({...props} : EntryProps) => {
 
   const previousCountedPrice = useRef(0)
   const previousCountedDayChange = useRef(0)
+
+  const navigate = useNavigate()
 
   const { value: countedPrice, reset: resetCountedPrice } = useCountUp({
     isCounting: true,
@@ -71,12 +74,15 @@ const Entry = ({...props} : EntryProps) => {
   }, [previousCountedPrice.current, previousCountedDayChange.current])
 
   return (
-    <tr className={`tableEntry${isDarkTheme ? ' darkTableEntry' : ''}`}>
+    <tr 
+      className={`tableEntry${isDarkTheme ? ' darkTableEntry' : ''}`}
+      onClick={() => navigate(`/${props.name}`)}
+    >
       <th className="index">{props.index}</th>
       <th className="name">
-        <a href="#">
+        <Link to={`/${props.name}`}>
           <div className="group">
-            <img src={props.logoSrc} height={"25px"}/>
+            <img src={props.logoSrc} alt={`${props.name} logo`} height="25px"/>
             <div className="nameDisplay">
               {props.name}
               <br/>
@@ -85,7 +91,7 @@ const Entry = ({...props} : EntryProps) => {
               </div>
             </div>
           </div>
-        </a>
+        </Link>
       </th>
       <th className="price">
         ${countedPrice?.toLocaleString()}
@@ -112,8 +118,10 @@ const Entry = ({...props} : EntryProps) => {
       </th>
       <th>
         <button 
-          className='favoriteBtn' 
-          onClick={() => {
+          className='favoriteBtn'
+          name='add-to-favorites' 
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation()
             if(!isFavorited){
               dispatch(setFavoritesList([...allFavorites, props.name]))
             }else{

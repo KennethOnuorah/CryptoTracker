@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../../../../hooks/redux'
 import useViewportDimensions from '../../../../../hooks/useViewportDimensions'
 
@@ -14,6 +15,7 @@ interface RecommendedProps{
 }
 
 const Recommended = ({ analyzedTokenName } : RecommendedProps) => {
+  const navigate = useNavigate()
   const isDarkTheme = useAppSelector(state => state.colorThemeReducer.isDarkTheme)
   const {width,} = useViewportDimensions()
   const filteredTokens = useAppSelector(state => state.currenciesReducer.coinData).filter(coin => coin.name !== analyzedTokenName)
@@ -45,6 +47,10 @@ const Recommended = ({ analyzedTokenName } : RecommendedProps) => {
               color: isDarkTheme ? 'white' : 'black',
               backgroundColor: isDarkTheme ? 'transparent' : 'white',
               border: isDarkTheme ? "1px solid #B9B9B9" :  '1px solid rgb(185, 185, 185)'
+            }}
+            onClick={() => {
+              navigate(`/${token.name}`)
+              window.scrollTo(0, 0)
             }}
           >
             <img src={token.image} title={`${token.name}`} alt={`${token.name} logo`} width={32} height={32}/>
