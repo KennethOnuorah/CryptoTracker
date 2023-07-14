@@ -9,7 +9,7 @@
 ------
 ## **About the Project** 🔎
 
-A web application that tracks and analyzes the cryptocurrency market in realtime. 
+A web application that tracks and analyzes the cryptocurrency market in real time. 
 
 Languages used: 
 
@@ -31,7 +31,7 @@ API's used:
 
 
 ## **Features** 📦️
-- [x] Realtime cryptocurrency prices & other informaton (updates every 5-6 minutes)
+- [x] Real time cryptocurrency prices & other informaton (updates every 5-6 minutes)
 - [x] Ability to add tokens to a favorites list
 - [x] Daily news
 - [x] Ability to find and search for crypto
