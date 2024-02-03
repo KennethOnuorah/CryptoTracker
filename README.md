@@ -26,8 +26,9 @@ Modules/Libraries used:
 
 API's used:
 
-1. [News API](https://newsapi.org/)
-2. [Currency Exchange Rate API](https://www.exchangerate-api.com/)
+1. [CoinGecko API](https://www.coingecko.com/en/api)
+2. [News API](https://newsapi.org/)
+3. [Currency Exchange Rate API](https://www.exchangerate-api.com/)
 
 
 ## **Features** 📦️
